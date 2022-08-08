@@ -4,6 +4,8 @@
 
 #include "global.h" // My main header file for this project itself
 
+#include "actuator_fns.h"
+
 void actuatorsSetup()
 {
     debugPrintln("actuatorsSetup() - executing");

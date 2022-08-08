@@ -71,10 +71,10 @@ void setup()
     timerSetup();  
     actuatorsSetup();  
     sensorsSetup(); 
+    gpsSetup();
     
     mavlink_unrequest_streaming_params_from_ap(); // I am trying to initially hush the AutoPilot (see my other mavlink stuff for explanation)   
     
- 
     main_state = CHECK_POWER;    // Ensure main state machine starts at correct first step.
 
     mp3.playFile(3); //Play F003.mp3 "Pulsar Initialisation Complete"

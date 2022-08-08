@@ -22,6 +22,12 @@
 
 /* function pre defines */
 void actuatorsSetup();
+void actuatorStrobeOn();
+void actuatorStrobeOff();
+void actuatorPiOn();
+void actuatorPiOff();
+void actuatorPowerFeatherOn();
+void actuatorPowerFeatherOff();
 
 #endif
 // END - actuator_fns.h

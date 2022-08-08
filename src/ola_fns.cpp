@@ -6,7 +6,7 @@
  */
 
 #include "global.h"        // My main header file for this project itself
-
+#include "ola_fns.h"
 
 // Based on Debug functions taken from the SparkFun u-blox library:
 // https://github.com/sparkfun/SparkFun_Ublox_Arduino_Library

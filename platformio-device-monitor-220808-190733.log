@@ -88,3 +88,470 @@
 19:17:38.516 > lux: 1491.15
 19:17:38.517 > case_read_sensors() - finishing
 19:18:33.340 > loop() - seconds_since_reset_or_powercycle=660
+19:19:33.417 > loop() - seconds_since_reset_or_powercycle=720
+19:19:37.421 > case_check_power() - time to execute
+19:19:37.422 > case_check_power() - 4.13
+19:19:39.423 > case_read_sensors() - time to execute
+19:19:39.423 > case_read_sensors() - SHTC3
+19:19:39.438 > Temperature: 24.59 degrees C
+19:19:39.438 > Humidity: 43.68% rH
+19:19:39.438 > raw ALS: 3266
+19:19:39.439 > raw white: 3494
+19:19:39.640 > lux: 1505.43
+19:19:39.641 > case_read_sensors() - finishing
+19:20:33.465 > loop() - seconds_since_reset_or_powercycle=780
+19:21:33.502 > loop() - seconds_since_reset_or_powercycle=840
+19:21:40.511 > case_read_sensors() - time to execute
+19:21:40.512 > case_read_sensors() - SHTC3
+19:21:40.523 > Temperature: 24.69 degrees C
+19:21:40.524 > Humidity: 43.49% rH
+19:21:40.524 > raw ALS: 3232
+19:21:40.524 > raw white: 3440
+19:21:40.724 > lux: 1489.31
+19:21:40.724 > case_read_sensors() - finishing
+19:22:33.535 > loop() - seconds_since_reset_or_powercycle=900
+19:22:38.535 > case_check_power() - time to execute
+19:22:38.536 > case_check_power() - 4.17
+19:23:33.567 > loop() - seconds_since_reset_or_powercycle=960
+19:23:41.571 > case_read_sensors() - time to execute
+19:23:41.572 > case_read_sensors() - SHTC3
+19:23:41.586 > Temperature: 24.91 degrees C
+19:23:41.587 > Humidity: 43.12% rH
+19:23:41.588 > raw ALS: 3266
+19:23:41.588 > raw white: 3496
+19:23:41.788 > lux: 1505.43
+19:23:41.788 > case_read_sensors() - finishing
+19:24:33.603 > loop() - seconds_since_reset_or_powercycle=1020
+19:25:33.634 > loop() - seconds_since_reset_or_powercycle=1080
+19:25:39.635 > case_check_power() - time to execute
+19:25:39.636 > case_check_power() - 4.07
+19:25:42.636 > case_read_sensors() - time to execute
+19:25:42.639 > case_read_sensors() - SHTC3
+19:25:42.652 > Temperature: 25.01 degrees C
+19:25:42.652 > Humidity: 42.99% rH
+19:25:42.652 > raw ALS: 3227
+19:25:42.653 > raw white: 3431
+19:25:42.853 > lux: 1487.46
+19:25:42.853 > case_read_sensors() - finishing
+19:26:33.662 > loop() - seconds_since_reset_or_powercycle=1140
+19:27:33.688 > loop() - seconds_since_reset_or_powercycle=1200
+19:27:43.690 > case_read_sensors() - time to execute
+19:27:43.691 > case_read_sensors() - SHTC3
+19:27:43.704 > Temperature: 25.18 degrees C
+19:27:43.705 > Humidity: 42.88% rH
+19:27:43.705 > raw ALS: 3227
+19:27:43.706 > raw white: 3433
+19:27:43.907 > lux: 1487.46
+19:27:43.907 > case_read_sensors() - finishing
+19:28:33.709 > loop() - seconds_since_reset_or_powercycle=1260
+19:28:40.711 > case_check_power() - time to execute
+19:28:40.711 > case_check_power() - 4.11
+19:29:33.728 > loop() - seconds_since_reset_or_powercycle=1320
+19:29:44.731 > case_read_sensors() - time to execute
+19:29:44.732 > case_read_sensors() - SHTC3
+19:29:44.746 > Temperature: 25.26 degrees C
+19:29:44.746 > Humidity: 42.68% rH
+19:29:44.746 > raw ALS: 3276
+19:29:44.747 > raw white: 3514
+19:29:44.948 > lux: 1509.12
+19:29:44.948 > case_read_sensors() - finishing
+19:30:33.742 > loop() - seconds_since_reset_or_powercycle=1380
+19:31:33.761 > loop() - seconds_since_reset_or_powercycle=1440
+19:31:41.761 > case_check_power() - time to execute
+19:31:41.766 > case_check_power() - 4.09
+19:31:45.762 > case_read_sensors() - time to execute
+19:31:45.762 > case_read_sensors() - SHTC3
+19:31:45.777 > Temperature: 25.30 degrees C
+19:31:45.777 > Humidity: 42.49% rH
+19:31:45.778 > raw ALS: 3272
+19:31:45.778 > raw white: 3503
+19:31:45.979 > lux: 1508.20
+19:31:45.979 > case_read_sensors() - finishing
+19:32:33.776 > loop() - seconds_since_reset_or_powercycle=1500
+19:33:33.788 > loop() - seconds_since_reset_or_powercycle=1560
+19:33:46.789 > case_read_sensors() - time to execute
+19:33:46.791 > case_read_sensors() - SHTC3
+19:33:46.804 > Temperature: 25.33 degrees C
+19:33:46.805 > Humidity: 42.26% rH
+19:33:46.805 > raw ALS: 3231
+19:33:46.806 > raw white: 3435
+19:33:47.006 > lux: 1489.31
+19:33:47.007 > case_read_sensors() - finishing
+19:34:33.798 > loop() - seconds_since_reset_or_powercycle=1620
+19:34:42.799 > case_check_power() - time to execute
+19:34:42.800 > case_check_power() - 4.11
+19:35:33.806 > loop() - seconds_since_reset_or_powercycle=1680
+19:35:47.809 > case_read_sensors() - time to execute
+19:35:47.810 > case_read_sensors() - SHTC3
+19:35:47.825 > Temperature: 25.35 degrees C
+19:35:47.825 > Humidity: 42.26% rH
+19:35:47.825 > raw ALS: 3233
+19:35:47.826 > raw white: 3437
+19:35:48.027 > lux: 1489.77
+19:35:48.028 > case_read_sensors() - finishing
+19:36:33.823 > loop() - seconds_since_reset_or_powercycle=1740
+19:37:33.839 > loop() - seconds_since_reset_or_powercycle=1800
+19:37:43.839 > case_check_power() - time to execute
+19:37:43.841 > case_check_power() - 4.16
+19:37:48.840 > case_read_sensors() - time to execute
+19:37:48.840 > case_read_sensors() - SHTC3
+19:37:48.855 > Temperature: 25.42 degrees C
+19:37:48.855 > Humidity: 42.02% rH
+19:37:48.855 > raw ALS: 3265
+19:37:48.856 > raw white: 3493
+19:37:49.057 > lux: 1503.59
+19:37:49.057 > case_read_sensors() - finishing
+19:38:33.850 > loop() - seconds_since_reset_or_powercycle=1860
+19:39:33.880 > loop() - seconds_since_reset_or_powercycle=1920
+19:39:49.875 > case_read_sensors() - time to execute
+19:39:49.877 > case_read_sensors() - SHTC3
+19:39:49.890 > Temperature: 25.47 degrees C
+19:39:49.890 > Humidity: 42.07% rH
+19:39:49.890 > raw ALS: 3232
+19:39:49.891 > raw white: 3435
+19:39:50.092 > lux: 1489.77
+19:39:50.092 > case_read_sensors() - finishing
+19:40:33.891 > loop() - seconds_since_reset_or_powercycle=1980
+19:40:44.893 > case_check_power() - time to execute
+19:40:44.894 > case_check_power() - 4.17
+19:41:33.905 > loop() - seconds_since_reset_or_powercycle=2040
+19:41:50.912 > case_read_sensors() - time to execute
+19:41:50.915 > case_read_sensors() - SHTC3
+19:41:50.924 > Temperature: 25.62 degrees C
+19:41:50.924 > Humidity: 42.05% rH
+19:41:50.924 > raw ALS: 3270
+19:41:50.925 > raw white: 3502
+19:41:51.125 > lux: 1506.82
+19:41:51.125 > case_read_sensors() - finishing
+19:42:33.917 > loop() - seconds_since_reset_or_powercycle=2100
+19:43:33.929 > loop() - seconds_since_reset_or_powercycle=2160
+19:43:45.929 > case_check_power() - time to execute
+19:43:45.930 > case_check_power() - 4.13
+19:43:51.931 > case_read_sensors() - time to execute
+19:43:51.931 > case_read_sensors() - SHTC3
+19:43:51.946 > Temperature: 25.59 degrees C
+19:43:51.946 > Humidity: 41.91% rH
+19:43:51.946 > raw ALS: 3272
+19:43:51.947 > raw white: 3505
+19:43:52.148 > lux: 1507.28
+19:43:52.148 > case_read_sensors() - finishing
+19:44:33.941 > loop() - seconds_since_reset_or_powercycle=2220
+19:45:33.946 > loop() - seconds_since_reset_or_powercycle=2280
+19:45:52.952 > case_read_sensors() - time to execute
+19:45:52.954 > case_read_sensors() - SHTC3
+19:45:52.969 > Temperature: 25.65 degrees C
+19:45:52.969 > Humidity: 41.90% rH
+19:45:52.969 > raw ALS: 3279
+19:45:52.969 > raw white: 3515
+19:45:53.168 > lux: 1511.42
+19:45:53.168 > case_read_sensors() - finishing
+19:46:33.960 > loop() - seconds_since_reset_or_powercycle=2340
+19:46:46.964 > case_check_power() - time to execute
+19:46:46.965 > case_check_power() - 4.19
+19:47:33.977 > loop() - seconds_since_reset_or_powercycle=2400
+19:47:53.982 > case_read_sensors() - time to execute
+19:47:53.984 > case_read_sensors() - SHTC3
+19:47:53.998 > Temperature: 25.67 degrees C
+19:47:53.998 > Humidity: 41.93% rH
+19:47:53.998 > raw ALS: 3259
+19:47:53.999 > raw white: 3482
+19:47:54.200 > lux: 1501.29
+19:47:54.200 > case_read_sensors() - finishing
+19:48:33.995 > loop() - seconds_since_reset_or_powercycle=2460
+19:49:34.012 > loop() - seconds_since_reset_or_powercycle=2520
+19:49:48.014 > case_check_power() - time to execute
+19:49:48.015 > case_check_power() - 4.12
+19:49:55.015 > case_read_sensors() - time to execute
+19:49:55.016 > case_read_sensors() - SHTC3
+19:49:55.030 > Temperature: 25.68 degrees C
+19:49:55.030 > Humidity: 41.95% rH
+19:49:55.031 > raw ALS: 3242
+19:49:55.031 > raw white: 3460
+19:49:55.231 > lux: 1494.84
+19:49:55.231 > case_read_sensors() - finishing
+19:50:34.025 > loop() - seconds_since_reset_or_powercycle=2580
+19:51:34.041 > loop() - seconds_since_reset_or_powercycle=2640
+19:51:56.046 > case_read_sensors() - time to execute
+19:51:56.048 > case_read_sensors() - SHTC3
+19:51:56.061 > Temperature: 25.72 degrees C
+19:51:56.062 > Humidity: 41.84% rH
+19:51:56.062 > raw ALS: 3283
+19:51:56.062 > raw white: 3520
+19:51:56.262 > lux: 1512.81
+19:51:56.262 > case_read_sensors() - finishing
+19:52:34.040 > loop() - seconds_since_reset_or_powercycle=2700
+19:52:49.042 > case_check_power() - time to execute
+19:52:49.044 > case_check_power() - 4.10
+19:53:34.050 > loop() - seconds_since_reset_or_powercycle=2760
+19:53:57.053 > case_read_sensors() - time to execute
+19:53:57.062 > case_read_sensors() - SHTC3
+19:53:57.068 > Temperature: 25.71 degrees C
+19:53:57.070 > Humidity: 41.80% rH
+19:53:57.070 > raw ALS: 3267
+19:53:57.070 > raw white: 3494
+19:53:57.269 > lux: 1493.45
+19:53:57.269 > case_read_sensors() - finishing
+19:54:34.058 > loop() - seconds_since_reset_or_powercycle=2820
+19:55:34.066 > loop() - seconds_since_reset_or_powercycle=2880
+19:55:50.068 > case_check_power() - time to execute
+19:55:50.069 > case_check_power() - 4.10
+19:55:58.070 > case_read_sensors() - time to execute
+19:55:58.072 > case_read_sensors() - SHTC3
+19:55:58.084 > Temperature: 25.76 degrees C
+19:55:58.085 > Humidity: 41.83% rH
+19:55:58.085 > raw ALS: 3230
+19:55:58.086 > raw white: 3437
+19:55:58.287 > lux: 1488.38
+19:55:58.289 > case_read_sensors() - finishing
+19:56:34.071 > loop() - seconds_since_reset_or_powercycle=2940
+19:57:34.074 > loop() - seconds_since_reset_or_powercycle=3000
+19:57:59.075 > case_read_sensors() - time to execute
+19:57:59.077 > case_read_sensors() - SHTC3
+19:57:59.092 > Temperature: 25.80 degrees C
+19:57:59.092 > Humidity: 41.87% rH
+19:57:59.092 > raw ALS: 3277
+19:57:59.093 > raw white: 3510
+19:57:59.294 > lux: 1510.04
+19:57:59.294 > case_read_sensors() - finishing
+19:58:34.082 > loop() - seconds_since_reset_or_powercycle=3060
+19:58:51.086 > case_check_power() - time to execute
+19:58:51.088 > case_check_power() - 4.09
+19:59:34.093 > loop() - seconds_since_reset_or_powercycle=3120
+20:00:00.097 > case_read_sensors() - time to execute
+20:00:00.098 > case_read_sensors() - SHTC3
+20:00:00.112 > Temperature: 25.82 degrees C
+20:00:00.112 > Humidity: 41.76% rH
+20:00:00.113 > raw ALS: 3243
+20:00:00.113 > raw white: 3460
+20:00:00.314 > lux: 1493.91
+20:00:00.315 > case_read_sensors() - finishing
+20:00:34.106 > loop() - seconds_since_reset_or_powercycle=3180
+20:01:34.119 > loop() - seconds_since_reset_or_powercycle=3240
+20:01:52.122 > case_check_power() - time to execute
+20:01:52.124 > case_check_power() - 4.08
+20:02:01.124 > case_read_sensors() - time to execute
+20:02:01.125 > case_read_sensors() - SHTC3
+20:02:01.139 > Temperature: 25.86 degrees C
+20:02:01.139 > Humidity: 41.70% rH
+20:02:01.139 > raw ALS: 3274
+20:02:01.140 > raw white: 3506
+20:02:01.341 > lux: 1507.74
+20:02:01.341 > case_read_sensors() - finishing
+20:02:34.132 > loop() - seconds_since_reset_or_powercycle=3300
+20:03:34.148 > loop() - seconds_since_reset_or_powercycle=3360
+20:04:02.155 > case_read_sensors() - time to execute
+20:04:02.157 > case_read_sensors() - SHTC3
+20:04:02.169 > Temperature: 25.91 degrees C
+20:04:02.169 > Humidity: 41.70% rH
+20:04:02.169 > raw ALS: 3274
+20:04:02.170 > raw white: 3506
+20:04:02.371 > lux: 1507.28
+20:04:02.371 > case_read_sensors() - finishing
+20:04:34.159 > loop() - seconds_since_reset_or_powercycle=3420
+20:04:53.164 > case_check_power() - time to execute
+20:04:53.165 > case_check_power() - 4.08
+20:05:34.166 > loop() - seconds_since_reset_or_powercycle=3480
+20:06:03.173 > case_read_sensors() - time to execute
+20:06:03.175 > case_read_sensors() - SHTC3
+20:06:03.187 > Temperature: 25.95 degrees C
+20:06:03.187 > Humidity: 41.95% rH
+20:06:03.187 > raw ALS: 3279
+20:06:03.188 > raw white: 3512
+20:06:03.388 > lux: 1510.96
+20:06:03.388 > case_read_sensors() - finishing
+20:06:34.178 > loop() - seconds_since_reset_or_powercycle=3540
+20:07:34.189 > loop() - seconds_since_reset_or_powercycle=3600
+20:07:54.191 > case_check_power() - time to execute
+20:07:54.200 > case_check_power() - 4.16
+20:08:04.191 > case_read_sensors() - time to execute
+20:08:04.192 > case_read_sensors() - SHTC3
+20:08:04.206 > Temperature: 25.99 degrees C
+20:08:04.206 > Humidity: 41.54% rH
+20:08:04.207 > raw ALS: 3264
+20:08:04.207 > raw white: 3492
+20:08:04.408 > lux: 1507.74
+20:08:04.409 > case_read_sensors() - finishing
+20:08:34.195 > loop() - seconds_since_reset_or_powercycle=3660
+20:09:34.203 > loop() - seconds_since_reset_or_powercycle=3720
+20:10:05.204 > case_read_sensors() - time to execute
+20:10:05.210 > case_read_sensors() - SHTC3
+20:10:05.215 > Temperature: 26.01 degrees C
+20:10:05.215 > Humidity: 41.50% rH
+20:10:05.216 > raw ALS: 3278
+20:10:05.217 > raw white: 3512
+20:10:05.417 > lux: 1510.04
+20:10:05.417 > case_read_sensors() - finishing
+20:10:34.202 > loop() - seconds_since_reset_or_powercycle=3780
+20:10:55.202 > case_check_power() - time to execute
+20:10:55.204 > case_check_power() - 4.22
+20:11:34.204 > loop() - seconds_since_reset_or_powercycle=3840
+20:12:06.202 > case_read_sensors() - time to execute
+20:12:06.203 > case_read_sensors() - SHTC3
+20:12:06.217 > Temperature: 26.02 degrees C
+20:12:06.218 > Humidity: 41.54% rH
+20:12:06.218 > raw ALS: 3242
+20:12:06.219 > raw white: 3462
+20:12:06.420 > lux: 1493.91
+20:12:06.420 > case_read_sensors() - finishing
+20:12:34.203 > loop() - seconds_since_reset_or_powercycle=3900
+20:13:34.200 > loop() - seconds_since_reset_or_powercycle=3960
+20:13:56.200 > case_check_power() - time to execute
+20:13:56.202 > case_check_power() - 4.11
+20:14:07.199 > case_read_sensors() - time to execute
+20:14:07.201 > case_read_sensors() - SHTC3
+20:14:07.214 > Temperature: 26.05 degrees C
+20:14:07.214 > Humidity: 41.53% rH
+20:14:07.215 > raw ALS: 3241
+20:14:07.215 > raw white: 3462
+20:14:07.415 > lux: 1493.45
+20:14:07.415 > case_read_sensors() - finishing
+20:14:34.199 > loop() - seconds_since_reset_or_powercycle=4020
+20:15:34.202 > loop() - seconds_since_reset_or_powercycle=4080
+20:16:08.203 > case_read_sensors() - time to execute
+20:16:08.204 > case_read_sensors() - SHTC3
+20:16:08.217 > Temperature: 26.11 degrees C
+20:16:08.219 > Humidity: 41.41% rH
+20:16:08.219 > raw ALS: 3268
+20:16:08.219 > raw white: 3497
+20:16:08.418 > lux: 1505.89
+20:16:08.418 > case_read_sensors() - finishing
+20:16:34.203 > loop() - seconds_since_reset_or_powercycle=4140
+20:16:57.203 > case_check_power() - time to execute
+20:16:57.204 > case_check_power() - 4.12
+20:17:34.201 > loop() - seconds_since_reset_or_powercycle=4200
+20:18:09.201 > case_read_sensors() - time to execute
+20:18:09.202 > case_read_sensors() - SHTC3
+20:18:09.216 > Temperature: 26.17 degrees C
+20:18:09.216 > Humidity: 41.36% rH
+20:18:09.216 > raw ALS: 3275
+20:18:09.217 > raw white: 3508
+20:18:09.418 > lux: 1508.66
+20:18:09.418 > case_read_sensors() - finishing
+20:18:34.202 > loop() - seconds_since_reset_or_powercycle=4260
+20:19:34.204 > loop() - seconds_since_reset_or_powercycle=4320
+20:19:58.205 > case_check_power() - time to execute
+20:19:58.206 > case_check_power() - 4.11
+20:20:10.208 > case_read_sensors() - time to execute
+20:20:10.210 > case_read_sensors() - SHTC3
+20:20:10.223 > Temperature: 26.16 degrees C
+20:20:10.223 > Humidity: 41.37% rH
+20:20:10.223 > raw ALS: 3226
+20:20:10.224 > raw white: 3432
+20:20:10.425 > lux: 1487.00
+20:20:10.425 > case_read_sensors() - finishing
+20:20:34.212 > loop() - seconds_since_reset_or_powercycle=4380
+20:21:34.220 > loop() - seconds_since_reset_or_powercycle=4440
+20:22:11.228 > case_read_sensors() - time to execute
+20:22:11.231 > case_read_sensors() - SHTC3
+20:22:11.242 > Temperature: 26.18 degrees C
+20:22:11.243 > Humidity: 41.25% rH
+20:22:11.243 > raw ALS: 3241
+20:22:11.243 > raw white: 3462
+20:22:11.444 > lux: 1492.53
+20:22:11.445 > case_read_sensors() - finishing
+20:22:34.229 > loop() - seconds_since_reset_or_powercycle=4500
+20:22:59.231 > case_check_power() - time to execute
+20:22:59.232 > case_check_power() - 4.19
+20:23:34.231 > loop() - seconds_since_reset_or_powercycle=4560
+20:24:12.229 > case_read_sensors() - time to execute
+20:24:12.231 > case_read_sensors() - SHTC3
+20:24:12.244 > Temperature: 26.20 degrees C
+20:24:12.244 > Humidity: 41.21% rH
+20:24:12.245 > raw ALS: 3230
+20:24:12.245 > raw white: 3436
+20:24:12.446 > lux: 1488.38
+20:24:12.446 > case_read_sensors() - finishing
+20:24:34.231 > loop() - seconds_since_reset_or_powercycle=4620
+20:25:34.240 > loop() - seconds_since_reset_or_powercycle=4680
+20:26:00.244 > case_check_power() - time to execute
+20:26:00.246 > case_check_power() - 4.23
+20:26:13.245 > case_read_sensors() - time to execute
+20:26:13.265 > case_read_sensors() - SHTC3
+20:26:13.265 > Temperature: 26.24 degrees C
+20:26:13.265 > Humidity: 41.14% rH
+20:26:13.265 > raw ALS: 3226
+20:26:13.265 > raw white: 3430
+20:26:13.461 > lux: 1487.46
+20:26:13.463 > case_read_sensors() - finishing
+20:26:34.246 > loop() - seconds_since_reset_or_powercycle=4740
+20:27:34.247 > loop() - seconds_since_reset_or_powercycle=4800
+20:28:14.252 > case_read_sensors() - time to execute
+20:28:14.253 > case_read_sensors() - SHTC3
+20:28:14.262 > Temperature: 26.32 degrees C
+20:28:14.262 > Humidity: 41.08% rH
+20:28:14.262 > raw ALS: 3244
+20:28:14.263 > raw white: 3461
+20:28:14.464 > lux: 1493.91
+20:28:14.464 > case_read_sensors() - finishing
+20:28:34.248 > loop() - seconds_since_reset_or_powercycle=4860
+20:29:01.251 > case_check_power() - time to execute
+20:29:01.253 > case_check_power() - 4.12
+20:29:34.253 > loop() - seconds_since_reset_or_powercycle=4920
+20:30:15.256 > case_read_sensors() - time to execute
+20:30:15.259 > case_read_sensors() - SHTC3
+20:30:15.271 > Temperature: 26.34 degrees C
+20:30:15.271 > Humidity: 41.02% rH
+20:30:15.272 > raw ALS: 3264
+20:30:15.272 > raw white: 3493
+20:30:15.473 > lux: 1504.05
+20:30:15.473 > case_read_sensors() - finishing
+20:30:34.258 > loop() - seconds_since_reset_or_powercycle=4980
+20:31:34.264 > loop() - seconds_since_reset_or_powercycle=5040
+20:32:02.267 > case_check_power() - time to execute
+20:32:02.268 > case_check_power() - 4.16
+20:32:16.268 > case_read_sensors() - time to execute
+20:32:16.269 > case_read_sensors() - SHTC3
+20:32:16.283 > Temperature: 26.34 degrees C
+20:32:16.283 > Humidity: 41.09% rH
+20:32:16.283 > raw ALS: 3225
+20:32:16.284 > raw white: 3432
+20:32:16.485 > lux: 1487.46
+20:32:16.485 > case_read_sensors() - finishing
+20:32:34.270 > loop() - seconds_since_reset_or_powercycle=5100
+20:33:34.276 > loop() - seconds_since_reset_or_powercycle=5160
+20:34:17.282 > case_read_sensors() - time to execute
+20:34:17.287 > case_read_sensors() - SHTC3
+20:34:17.296 > Temperature: 26.37 degrees C
+20:34:17.296 > Humidity: 40.93% rH
+20:34:17.297 > raw ALS: 3265
+20:34:17.298 > raw white: 3494
+20:34:17.497 > lux: 1505.43
+20:34:17.497 > case_read_sensors() - finishing
+20:34:34.284 > loop() - seconds_since_reset_or_powercycle=5220
+20:35:03.288 > case_check_power() - time to execute
+20:35:03.290 > case_check_power() - 4.09
+20:35:34.292 > loop() - seconds_since_reset_or_powercycle=5280
+20:36:18.296 > case_read_sensors() - time to execute
+20:36:18.297 > case_read_sensors() - SHTC3
+20:36:18.310 > Temperature: 26.42 degrees C
+20:36:18.310 > Humidity: 41.01% rH
+20:36:18.310 > raw ALS: 3271
+20:36:18.311 > raw white: 3504
+20:36:18.511 > lux: 1507.28
+20:36:18.511 > case_read_sensors() - finishing
+20:36:34.298 > loop() - seconds_since_reset_or_powercycle=5340
+20:37:34.303 > loop() - seconds_since_reset_or_powercycle=5400
+20:38:04.301 > case_check_power() - time to execute
+20:38:04.301 > case_check_power() - 4.23
+20:38:19.300 > case_read_sensors() - time to execute
+20:38:19.302 > case_read_sensors() - SHTC3
+20:38:19.317 > Temperature: 26.37 degrees C
+20:38:19.317 > Humidity: 40.98% rH
+20:38:19.317 > raw ALS: 3222
+20:38:19.317 > raw white: 3425
+20:38:19.519 > lux: 1483.32
+20:38:19.519 > case_read_sensors() - finishing
+20:38:34.300 > loop() - seconds_since_reset_or_powercycle=5460
+20:39:34.300 > loop() - seconds_since_reset_or_powercycle=5520
+20:40:20.299 > case_read_sensors() - time to execute
+20:40:20.300 > case_read_sensors() - SHTC3
+20:40:20.314 > Temperature: 26.29 degrees C
+20:40:20.314 > Humidity: 41.20% rH
+20:40:20.315 > raw ALS: 3221
+20:40:20.315 > raw white: 3421
+20:40:20.515 > lux: 1483.78
+20:40:20.515 > case_read_sensors() - finishing
+20:40:34.300 > loop() - seconds_since_reset_or_powercycle=5580
+20:41:05.300 > case_check_power() - time to execute
+20:41:05.301 > case_check_power() - 4.18
+20:41:34.300 > loop() - seconds_since_reset_or_powercycle=5640

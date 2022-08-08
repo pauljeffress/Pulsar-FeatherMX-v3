@@ -22,16 +22,17 @@
 
 #include <TimeLib.h> // The PJRC TimeLib library to help me deal with Unix Epoch time from GPS.
 
-#include "serial_fns.h"         // one of mine in this project
-#include "loop.h"               // one of mine in this project
-#include "misc_fns.h"           // one of mine in this project
-
-#include "RTC_Adafruit_fns.h"   // one of mine in this project
-#include "OLED_mini_fns.h"      // one of mine in this project
-#include "sensor_fns.h"         // one of mine in this project
-#include "ola_fns.h"            // one of mine in this project
-#include "actuator_fns.h"       // one of mine in this project
-#include "mp3_fns.h"            // one of mine in this project
+// Includes from my various files here in this project
+#include "serial_fns.h"
+#include "loop.h"
+#include "misc_fns.h"
+#include "RTC_Adafruit_fns.h"
+#include "OLED_mini_fns.h"
+#include "sensor_fns.h"
+#include "ola_fns.h"
+#include "actuator_fns.h"
+#include "mp3_fns.h"
+#include "gps_fns.h"
 
 // Includes from various stuff I need from Pulsar_Shared_Source
 #include "CBP.h"    // my CAN Boat Protocol
@@ -88,12 +89,6 @@ extern bool flag_tx_msg_to_ap;
 extern bool flag_do_first_agt_tx;
 extern bool flag_first_agt_tx;
 
-
-extern bool _printLog;
-extern Stream *_logSerial;
-
-extern PULSAR_MAIN_SM_STATE  main_state;
-
 extern GlobalMission_t global_mission;
 
 extern uint8_t fmx_tx_to_agt_numtries;
@@ -103,12 +98,6 @@ extern long lastsec1;
 /*============================*/
 /* Function Predefines        */
 /*============================*/
-void actuatorsSetup();
-void sensorsTest();
-
-void serialSetup();
-
-
 void case_loop_init();
 void case_zzz();
 void case_wake();
@@ -132,12 +121,7 @@ int16_t int32_to_int16_a(int32_t input_int32);
 uint16_t int32_to_int16_b(int32_t input_int32);
 uint16_t int32_to_int16_c(int32_t input_int32);
 
-void actuatorStrobeOn();
-void actuatorStrobeOff();
-void actuatorPiOn();
-void actuatorPiOff();
-void actuatorPowerFeatherOn();
-void actuatorPowerFeatherOff();
+
 
 
 #endif

@@ -27,13 +27,20 @@ void loop(void)
         // Check Feather's power source status.
         case CHECK_POWER:
             case_check_power();
-            main_state = READ_SENSORS; // Set next state
+            main_state = READ_SENSORS;
             break;
 
         // ************************************************************************************************
         // Read the various sensors attached to the Feather.
         case READ_SENSORS:
             case_read_sensors();
+            main_state = READ_GPS;
+            break;
+        
+        // ************************************************************************************************
+        // Read the GPS attached to the Feather.
+        case READ_GPS:
+            case_read_gps();
             //main_state = TX_TO_CANBUS; // Set next state
             main_state = CHECK_POWER; // XXX - TEMPORARY
             break;
