@@ -1,0 +1,10 @@
+19:05:19.569 > case_read_sensors() - time to execute
+19:05:19.570 > case_read_sensors() - SHTC3
+19:05:19.584 > Temperature: 23.29 degrees C
+19:05:19.584 > Humidity: 44.90% rH
+19:05:19.585 > raw ALS: 3302
+19:05:19.585 > raw white: 3539
+19:05:19.786 > lux: 1520.64
+19:05:19.786 > case_read_sensors() - finishing
+19:06:02.616 > loop() - seconds_since_reset_or_powercycle=2100
+19:07:02.678 > loop() - seconds_since_reset_or_powercycle=2160

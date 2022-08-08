@@ -1,0 +1,89 @@
+19:07:36.865 > OLEDMiniSetup() - Starting.
+19:07:37.129 > OLEDMiniSetup() - Complete.
+19:07:44.175 > MP3Setup() - MP3 Player initialising
+19:07:44.176 > MP3Setup() - Found MP3 Player
+19:07:44.176 > ================================================
+19:07:44.176 > ************************************************
+19:07:44.176 > ================================================
+19:07:44.176 >         Pulsar FeatherMx Reset/PowerOn          
+19:07:44.176 > initFmxSettings: RAM settings initialised
+19:07:44.176 > initTFTFeatherInternalSettings: initialised
+19:07:44.176 > initPowerFeatherSettings: initialised
+19:07:44.176 > global_mission_init() - Starting
+19:07:44.176 > global_mission_init() - Complete
+19:07:44.176 > RTCSetup() - Starting.
+19:07:44.176 > RTCSetup() - RTC found ok
+19:07:44.176 > RTCSetup() - RTC time ok
+19:07:44.176 > RTCPrintCurrentTime() - 2022/8/8 (Monday) 19:7:23 since midnight 1/1/1970 = 1659985643 seconds OR 19212 days
+19:07:44.176 > RTCSetup() - Complete.
+19:07:44.176 > CANSetup() - Starting: CAN OK
+19:07:44.676 > timerSetup() - executing
+19:07:44.678 > actuatorsSetup() - executing
+19:07:44.678 > actuatorsSetup() - Pi ON
+19:07:44.678 > actuatorsSetup() - Strobe Light ON
+19:07:44.678 > actuatorsSetup() - PowerFeather ON
+19:07:44.678 > actuatorsSetup() - complete
+19:07:44.678 > sensorsSetup() - Starting.
+19:07:44.678 > sensorsSetup() - SHTC3 initialising
+19:07:44.679 > sensorsSetup() - Found SHTC3 sensor
+19:07:44.679 > sensorsSetup() - VEML7700 initialising
+19:07:44.791 > sensorsSetup() - Found VEML7700 sensor
+19:07:44.793 > mavlink_unrequest_streaming_params_from_ap() - Executing
+19:07:50.793 > mavlink_unrequest_streaming_params_from_ap() - Complete
+19:07:50.820 > setup() - Complete
+19:08:32.863 > loop() - seconds_since_reset_or_powercycle=60
+19:09:32.919 > loop() - seconds_since_reset_or_powercycle=120
+19:09:33.919 > case_read_sensors() - time to execute
+19:09:33.919 > case_read_sensors() - SHTC3
+19:09:33.936 > Temperature: 23.84 degrees C
+19:09:33.936 > Humidity: 44.50% rH
+19:09:33.936 > raw ALS: 3257
+19:09:33.936 > raw white: 3474
+19:09:34.136 > lux: 1507.28
+19:09:34.137 > case_read_sensors() - finishing
+19:10:32.973 > loop() - seconds_since_reset_or_powercycle=180
+19:10:33.973 > case_check_power() - time to execute
+19:10:33.973 > case_check_power() - 4.19
+19:11:33.050 > loop() - seconds_since_reset_or_powercycle=240
+19:11:35.027 > case_read_sensors() - time to execute
+19:11:35.028 > case_read_sensors() - SHTC3
+19:11:35.042 > Temperature: 23.96 degrees C
+19:11:35.042 > Humidity: 44.48% rH
+19:11:35.042 > raw ALS: 3244
+19:11:35.043 > raw white: 3454
+19:11:35.244 > lux: 1494.84
+19:11:35.244 > case_read_sensors() - finishing
+19:12:33.077 > loop() - seconds_since_reset_or_powercycle=300
+19:13:33.120 > loop() - seconds_since_reset_or_powercycle=360
+19:13:35.120 > case_check_power() - time to execute
+19:13:35.121 > case_check_power() - 4.12
+19:13:36.121 > case_read_sensors() - time to execute
+19:13:36.122 > case_read_sensors() - SHTC3
+19:13:36.137 > Temperature: 24.07 degrees C
+19:13:36.137 > Humidity: 44.29% rH
+19:13:36.137 > raw ALS: 3276
+19:13:36.137 > raw white: 3505
+19:13:36.339 > lux: 1511.42
+19:13:36.339 > case_read_sensors() - finishing
+19:14:33.163 > loop() - seconds_since_reset_or_powercycle=420
+19:15:33.204 > loop() - seconds_since_reset_or_powercycle=480
+19:15:37.206 > case_read_sensors() - time to execute
+19:15:37.206 > case_read_sensors() - SHTC3
+19:15:37.221 > Temperature: 24.21 degrees C
+19:15:37.221 > Humidity: 44.13% rH
+19:15:37.221 > raw ALS: 3280
+19:15:37.223 > raw white: 3513
+19:15:37.422 > lux: 1510.96
+19:15:37.422 > case_read_sensors() - finishing
+19:16:33.251 > loop() - seconds_since_reset_or_powercycle=540
+19:16:36.249 > case_check_power() - time to execute
+19:16:36.249 > case_check_power() - 4.14
+19:17:33.298 > loop() - seconds_since_reset_or_powercycle=600
+19:17:38.299 > case_read_sensors() - time to execute
+19:17:38.300 > case_read_sensors() - SHTC3
+19:17:38.314 > Temperature: 24.37 degrees C
+19:17:38.315 > Humidity: 43.99% rH
+19:17:38.315 > raw ALS: 3236
+19:17:38.315 > raw white: 3444
+19:17:38.516 > lux: 1491.15
+19:17:38.517 > case_read_sensors() - finishing
