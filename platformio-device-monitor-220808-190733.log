@@ -87,3 +87,4 @@
 19:17:38.315 > raw white: 3444
 19:17:38.516 > lux: 1491.15
 19:17:38.517 > case_read_sensors() - finishing
+19:18:33.340 > loop() - seconds_since_reset_or_powercycle=660
