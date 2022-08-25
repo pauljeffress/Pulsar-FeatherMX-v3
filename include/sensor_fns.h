@@ -27,6 +27,7 @@ extern bool sensor_veml7700_status;
 
 /* function pre defines */
 void sensorsSetup();
+void case_read_sensors();
 
 #endif
 // END - sensor_fns.h

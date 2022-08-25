@@ -16,9 +16,11 @@
 
 typedef enum PULSAR_MAIN_SM_STATE     // State machine states for the main state machine running in loop()
 {
+    THINK,
     CHECK_POWER,
     READ_SENSORS,
     READ_GPS,
+    CONTACT_GROUND,
     TX_TO_CANBUS,
     CHECK_CANBUS,
     HEARTBEAT_TO_AP,

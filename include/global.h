@@ -23,6 +23,10 @@
 #include <TimeLib.h> // The PJRC TimeLib library to help me deal with Unix Epoch time from GPS.
 
 // Includes from my various files here in this project
+#include "think_fns.h"
+#include "timer_counter_fns.h"
+#include "storage_fns.h"
+#include "power_fns.h"
 #include "serial_fns.h"
 #include "loop.h"
 #include "misc_fns.h"
@@ -33,22 +37,27 @@
 #include "actuator_fns.h"
 #include "mp3_fns.h"
 #include "gps_fns.h"
+#include "contact_ground_fns.h"
+#include "ISBD_fns.h"
+#include "pixel_fns.h"
+#include "prep_binary_MO_message_locarb.h"
+
 
 // Includes from various stuff I need from Pulsar_Shared_Source
 #include "CBP.h"    // my CAN Boat Protocol
 #include "can_fns.h"  
 #include "debug_fns.h"
-#include "timer_fns.h"
+#include "time_manip_fns.h"
 #include "Unions.h"
 #include "pulsar_packer_fns.h"
 #include "pulsar_buffer_fns.h"
 #include "case_check_CANbus.h"
-#include "case_check_power.h"
 #include "mavlink_fns.h"
+#include "FmxSettings_fns.h"
 #include "PowerFeatherSettings_fns.h"
 #include "TFTFeatherInternalSettings_fns.h"
-#include "FmxSettings_fns.h"
 #include "pulsar_boat_tofrom_ground_fns.h"
+#include "MO_and_MT_messages.h"
 
 
 /*=======================*/
@@ -63,6 +72,10 @@
 #define PI_PWR_PIN              23 // The pin the FMX controls the power supply to the Pi on.
 #define STROBE_LIGHT_PWR_PIN    24 // The pin the FMX controls the power supply to the Strobe light on.
 #define POWER_FEATHER_PWR_PIN   25 // The pin the FMX controls the power supply to the Power Feather on.
+
+// Timers and Timeouts
+#define RX_FROM_GSE32_TIMEOUT_S 20      // seconds - how long do_iridium_locarb() should wait while receiving a message from the GSE32
+
 
 /*=======================*/
 /* define any enums      */
@@ -85,7 +98,6 @@ extern Uart Serial3;
 extern bool flag_tx_msg_to_agt;
 extern bool flag_got_msg_from_agt;
 extern bool flag_got_msg_from_agt_with_mission;
-extern bool flag_tx_msg_to_ap;
 extern bool flag_do_first_agt_tx;
 extern bool flag_first_agt_tx;
 
@@ -98,11 +110,9 @@ extern long lastsec1;
 /*============================*/
 /* Function Predefines        */
 /*============================*/
-void case_loop_init();
-void case_zzz();
-void case_wake();
-void case_assess_situation();
-void case_read_sensors();
+//void case_loop_init();
+//void case_assess_situation();
+
 void case_tx_to_CANbus();
 void case_write_to_tft();
 void case_heartbeat_to_autopilot();

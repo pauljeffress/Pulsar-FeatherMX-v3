@@ -24,8 +24,6 @@ void setup()
     oled.println("    ---  FMX   ---");
     oled.println("setup() - underway");
 
-
-
     for (int x = 0; x < 5; x++)
     {
         digitalWrite(LED_BUILTIN, HIGH);
@@ -45,7 +43,8 @@ void setup()
                              // Serial.end(); before putting the processor to sleep.
                              // Uncomment this line to enable extra debug messages to Serial    
 
-    MP3Setup(); // Needs to be after Serial and debugs are enabled, and Wire.begin()
+    pixelSetup();   // prep the NeoPixel on the Feather.
+    MP3Setup();     // Needs to be after Serial and debugs are enabled, and Wire.begin()
 
     debugPrintln("================================================");
     debugPrintln("************************************************");
@@ -59,25 +58,29 @@ void setup()
     logPrintln("================================================");
     logPrintln("        Pulsar FeatherMx Reset/PowerOn          "); 
     
-    initFmxSettings();        // Initialise the myFmxSettings, from defaults or otherwise.
-    // zeroFmxSharedSettings();  // Zero out the myFmxSharedSettings, so it is cleanly initialised.
-    // zeroAgtSharedSettings();  // Zero out the myAgtSharedSettings, so it is cleanly initialised.
+    
+    setupFmxSettings();     // initialise FmxSetting from defaults or EEPROM stored values if present.
+
+
+
     initTFTFeatherInternalSettings();
     initPowerFeatherSettings();
     initMAVLinkSettings();  
 
     RTCSetup(&Wire);
     CANStatus = CANSetup();     
-    timerSetup();  
+    timerCounterSetup();  
     actuatorsSetup();  
     sensorsSetup(); 
     gpsSetup();
-    
+    ISBDSetup();
+
     mavlink_unrequest_streaming_params_from_ap(); // I am trying to initially hush the AutoPilot (see my other mavlink stuff for explanation)   
     
-    main_state = CHECK_POWER;    // Ensure main state machine starts at correct first step.
+    justBootedFlag = true;
+    main_state = THINK;     // Ensure main state machine starts at correct first step.
 
-    mp3.playFile(3); //Play F003.mp3 "Pulsar Initialisation Complete"
+    mp3.playFile(3); delay(2000); //Play F003.mp3 "Pulsar Initialisation Complete"
     oled.println("setup() - Complete");
 
     debugPrintln("setup() - Complete");

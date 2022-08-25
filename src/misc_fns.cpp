@@ -24,6 +24,8 @@ void setupPins()
     digitalWrite(STROBE_LIGHT_PWR_PIN, LOW);
     pinMode(POWER_FEATHER_PWR_PIN, OUTPUT);
     digitalWrite(POWER_FEATHER_PWR_PIN, LOW);
+
+    gpsOFF();
 }
 
 // Because Arduino print can't handle uint64_t I found this here https://forum.arduino.cc/t/printing-uint64_t/364646
@@ -67,7 +69,7 @@ void loopHousekeeping()
         unsigned long numSecsPassed = (oneSecCounter - oneSecCounter_last) / 1000; // how many whole seconds have passed
         oneSecCounter_last = oneSecCounter;
         for (unsigned long i = 0; i < numSecsPassed; i++) // call my incrementer once for each second that has passed.
-            timerIncrementer();
+            timerCounterIncrementer();
     }
 
     // print a seconds count every X secs when idling around this while loop....makes visual troubleshooting easier :)

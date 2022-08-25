@@ -26,8 +26,8 @@ void OLEDMiniSetup()
     // We are assuming "Wire.begin()"" has already been run.
 
     // Initalize the OLED device and related graphics system
-    oled.begin(&Adafruit128x64, OLED_MINI_ADDR);
-
+    oled.begin(&Adafruit128x64, OLED_MINI_ADDR);    // xxx - this line BLOCKS if I2C bus is not functioning!!!!!!!
+    Serial.println("OLEDMiniSetup() - begin done");
     OLED_mini_status = true;
 
     oled.setScrollMode(SCROLL_MODE_AUTO);   // depends on INCLUDE_SCROLLING must be non-zero.  Edit SSD1306Ascii.h

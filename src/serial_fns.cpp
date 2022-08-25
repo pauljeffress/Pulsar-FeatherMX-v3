@@ -3,19 +3,29 @@
  *
  * All Serial port specific functions live here.
  * Both code for existing ports and the new ones I need to build to give me extra Serial
- *  ports to plug into the AGT and OpenLog.
+ * ports to plug into the AGT and OpenLog.
  *
+ *
+ * Serial1 = ISBD 9603 module
+ * Serial2 = Cube AutoPilot
+ * Serial3 = OpenLog Artemis
+ * 
  */
+
 
 #include "global.h" // My main header file for this project itself
 
-// Create Serial2 - a new hw Serial port I'll use to connect to the AGT.
-// Note I am calling it "Serial2", I'm not sure, but when I tried naming it something like "UartToAGT" I had problems tx/rx'ing.
-// Define --- SERCOM    RX  TX      RX PAD           TX PAD
+/* Create Serial2 - a new hw Serial port
+ * Note I am calling it "Serial2", I'm not sure, but when I tried naming it something like "UartToAGT" I had problems tx/rx'ing.
+ * On Feather D19=RX2, D18=TX2
+ * Define -- SERCOM    RX  TX      RX PAD           TX PAD
+ */
 Uart Serial2(&sercom0, 19, 18, SERCOM_RX_PAD_2, UART_TX_PAD_0);
 
-// Create Serial3 - a new hw Serial port I'll use to connect to the OpenLog Artemis.
-// Define --- SERCOM    RX  TX      RX PAD           TX PAD
+/* Create Serial3 - a new hw Serial port
+ * On Feather D11=RX3, D12=TX3
+ * Define -- SERCOM    RX  TX      RX PAD           TX PAD
+ */
 Uart Serial3(&sercom3, 11, 12, SERCOM_RX_PAD_3, UART_TX_PAD_0);
 
 
@@ -64,19 +74,15 @@ void serialSetup()
     delay(2000);          // ensure time for the Serial port to get ready.
 
     /*
-     * Serial1 - setup the serial port between Feather and Cube Orange port for MAVLink telemetry
+     * Serial1 - setup the serial port between Feather and Iridium 9603 Sat Modem
      */
-    Serial1.begin(57600); // RXTX from AP (Pins RX1 & TX1 on Feather M4)
+    Serial1.begin(19200);
 
     /*
-     * Serial2 - setup the serial port between Feather & 9603 SatComms.
-     *
-     * After below config, Serial2 will present on the following pins;
-     * Serial2 TX = D18/A4
-     * Serial2 RX = D19/A5
+     * Serial2 - setup the serial port between Feather & Cube AutoPilot.
      */
     // Initialise
-    Serial2.begin(19200);
+    Serial2.begin(57600);
     // Reassign pins on the internal SAMD pinmux, to connect to my SERCOMs. They may have defaulted to other peripherals.
     // Assign Arduino Pins D18 & D19 SERCOM functionality. Must happen after the SerialX.begin(xxxx) command.
     pinPeripheral(18, PIO_SERCOM_ALT); // the 'PIO_SERCOM' should be 'PIO_SERCOM_ALT' if we are trying to use the 'alternate' pins for this.
@@ -84,10 +90,6 @@ void serialSetup()
 
     /*
      *  Serial 3 - setup the serial logging port between Feather & OpenLog Artemis for logging.
-     *
-     * After below config, Serial3 will present on the following pins;
-     * Serial3 TX = D12
-     * Serial3 RX = D11 (but not used with OLA)
      */
     // Initialise the Serial that connects this Feather to the OpenLog Artemis
     Serial3.begin(57600);
