@@ -22,9 +22,8 @@
  *  on the ground, as an unsuccessful attempt to get a fix.
  */
 
-//Global Variables
-SFE_UBLOX_GNSS myGNSS;      // Declare the uBlox GPS object
-
+// Global Variables
+SFE_UBLOX_GNSS myGNSS; // Declare the uBlox GPS object
 
 void gpsON() // Enable power for the gps
 {
@@ -44,16 +43,26 @@ void print_gps_data()
     debugPrintln("============================================================");
     debugPrintln("=              myFmxSettings all GPS data                  =");
     debugPrintln("============================================================");
-    Serial.print("myFmxSettings.FMX_GPS_STATUS:");              Serial.println(myFmxSettings.FMX_GPS_STATUS           );
-    Serial.print("myFmxSettings.FMX_GPS_FIX:");                 Serial.println(myFmxSettings.FMX_GPS_FIX              );
-    Serial.print("myFmxSettings.FMX_GPS_SIV:");                 Serial.println(myFmxSettings.FMX_GPS_SIV              );
-    Serial.print("myFmxSettings.FMX_GPS_POSITIONTIMESTAMP:");   Serial.println(myFmxSettings.FMX_GPS_POSITIONTIMESTAMP);
-    Serial.print("myFmxSettings.FMX_GPS_LAT:");                 Serial.println(myFmxSettings.FMX_GPS_LAT              );
-    Serial.print("myFmxSettings.FMX_GPS_LON:");                 Serial.println(myFmxSettings.FMX_GPS_LON              );
-    Serial.print("myFmxSettings.FMX_GPS_ALT:");                 Serial.println(myFmxSettings.FMX_GPS_ALT              );
-    Serial.print("myFmxSettings.FMX_GPS_GSPEED:");              Serial.println(myFmxSettings.FMX_GPS_GSPEED           );
-    Serial.print("myFmxSettings.FMX_GPS_HEAD_MOTION:");         Serial.println(myFmxSettings.FMX_GPS_HEAD_MOTION      );
-    Serial.print("myFmxSettings.FMX_GPS_PDOP:");                Serial.println(myFmxSettings.FMX_GPS_PDOP             );
+    Serial.print("myFmxSettings.FMX_GPS_STATUS:");
+    Serial.println(myFmxSettings.FMX_GPS_STATUS);
+    Serial.print("myFmxSettings.FMX_GPS_FIX:");
+    Serial.println(myFmxSettings.FMX_GPS_FIX);
+    Serial.print("myFmxSettings.FMX_GPS_SIV:");
+    Serial.println(myFmxSettings.FMX_GPS_SIV);
+    Serial.print("myFmxSettings.FMX_GPS_POSITIONTIMESTAMP:");
+    Serial.println(myFmxSettings.FMX_GPS_POSITIONTIMESTAMP);
+    Serial.print("myFmxSettings.FMX_GPS_LAT:");
+    Serial.println(myFmxSettings.FMX_GPS_LAT);
+    Serial.print("myFmxSettings.FMX_GPS_LON:");
+    Serial.println(myFmxSettings.FMX_GPS_LON);
+    Serial.print("myFmxSettings.FMX_GPS_ALT:");
+    Serial.println(myFmxSettings.FMX_GPS_ALT);
+    Serial.print("myFmxSettings.FMX_GPS_GSPEED:");
+    Serial.println(myFmxSettings.FMX_GPS_GSPEED);
+    Serial.print("myFmxSettings.FMX_GPS_HEAD_MOTION:");
+    Serial.println(myFmxSettings.FMX_GPS_HEAD_MOTION);
+    Serial.print("myFmxSettings.FMX_GPS_PDOP:");
+    Serial.println(myFmxSettings.FMX_GPS_PDOP);
     debugPrintln("============================================================");
 }
 
@@ -78,7 +87,7 @@ void case_read_gps()
 
     if (readGPSFlag)
     {
-        readGPSFlag = false;    // clear the flag as we are actioning it now.
+        readGPSFlag = false; // clear the flag as we are actioning it now.
         myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_UNKNOWN;
         mp3.playFile(6); // Play F006.mp3 "Read GPS"
 
@@ -89,6 +98,7 @@ void case_read_gps()
 #else // i.e. don't skip, we want to get a GPS fix
         debugPrintln("\ncase_read_GPS() - Starting");
         oled.println("read_GPS()");
+        pixelBlue(); // set Pixel to Blue for GPS activity.
 
         /*
          *  Power up the GPS module
@@ -120,7 +130,7 @@ void case_read_gps()
                 debugPrintln("case_read_GPS() - ERROR ***!!! Ublox GPS not detected at default I2C address !!!***");
                 oled.print(" I2C err");
                 myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_INIT_FAILED;
-                myFmxSettings.FMX_GPS_FIX = DEF_FMX_GPS_FIX;  // tag the FIX as DEF_FMX_GPS_FIX so we know a fix was not achieved when we see this value at Ground Station.
+                myFmxSettings.FMX_GPS_FIX = DEF_FMX_GPS_FIX; // tag the FIX as DEF_FMX_GPS_FIX so we know a fix was not achieved when we see this value at Ground Station.
             }
             else // If the GPS started up OK
             {
@@ -159,11 +169,11 @@ void case_read_gps()
                 // debugPrint("case_read_GPS() - start(mS)=");debugPrintlnInt(start);
                 while (!timedOut && (fixType < GPS_MIN_FIX_TYPE)) // do this until we either get a suitable quality fix or we time out.
                 {
-                    // Flash the BUILTIN LED at 1Hz inside this for loop
-                    if ((millis() / 1000) % 2 == 1)
-                        digitalWrite(LED_BUILTIN, HIGH);
+                    // Flash the onboard NeoPixel at 1 Hz
+                    if ((millis() / 2000) % 2 == 1)
+                        pixelBlue();
                     else
-                        digitalWrite(LED_BUILTIN, LOW);
+                        pixelOff();
 
                     /*
                      *  Attempt to get a GPS fix.
@@ -226,17 +236,26 @@ void case_read_gps()
                     myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_FIX_OK;
                     oled.print("FIX ok ");
                     mp3.playFile(8); // "Received a GPS fix"
+                    // Flash pixel Blue (for ISBD) and Green (for success) slowly for 10 secs to indicate successful GPS Fix
+                    for (int i = 0; i < 5; i++)
+                    {
+                        pixelBlue();
+                        delay(1000);
+                        pixelGreen();
+                        delay(1000);
+                    }
+                    pixelOff();
                     flag_gps_fix_succeeded = true; // set flag accordingly for use in subsequent states.
 
-                    myFmxSettings.FMX_GPS_FIX = fixType;    // Store this data
-                    myFmxSettings.FMX_GPS_SIV = sivCount;  // Store this data
+                    myFmxSettings.FMX_GPS_FIX = fixType;  // Store this data
+                    myFmxSettings.FMX_GPS_SIV = sivCount; // Store this data
                     myFmxSettings.FMX_GPS_POSITIONTIMESTAMP = myGNSS.getUnixEpoch();
-                    myFmxSettings.FMX_GPS_LAT = myGNSS.getLatitude(); // Get the latitude in degrees * 10^-7
-                    myFmxSettings.FMX_GPS_LON = myGNSS.getLongitude(); // Get the longitude in degrees * 10^-7
-                    myFmxSettings.FMX_GPS_ALT = myGNSS.getAltitudeMSL(); // Get the altitude above Mean Sea Level in mm
-                    myFmxSettings.FMX_GPS_GSPEED = myGNSS.getGroundSpeed(); // Get the ground speed in mm/s
+                    myFmxSettings.FMX_GPS_LAT = myGNSS.getLatitude();        // Get the latitude in degrees * 10^-7
+                    myFmxSettings.FMX_GPS_LON = myGNSS.getLongitude();       // Get the longitude in degrees * 10^-7
+                    myFmxSettings.FMX_GPS_ALT = myGNSS.getAltitudeMSL();     // Get the altitude above Mean Sea Level in mm
+                    myFmxSettings.FMX_GPS_GSPEED = myGNSS.getGroundSpeed();  // Get the ground speed in mm/s
                     myFmxSettings.FMX_GPS_HEAD_MOTION = myGNSS.getHeading(); // Get the heading in degrees * 10^-7
-                    myFmxSettings.FMX_GPS_PDOP = myGNSS.getPDOP(); // Get the PDOP in cm
+                    myFmxSettings.FMX_GPS_PDOP = myGNSS.getPDOP();           // Get the PDOP in cm
 
                     print_gps_data();
                     seconds_since_last_gps_read = 0; // Read was successful so reset the timer.
@@ -246,7 +265,16 @@ void case_read_gps()
                     debugPrintln("case_read_GPS() - WARNING A suitable fix was NOT found! Leaving values at last reading");
                     myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_FIX_FAILED;
                     oled.println(" Fix:No/too low.");
-                    mp3.playFile(7); // "WARNING, no GPS fix"
+                    mp3.playFile(7);                 // "WARNING, no GPS fix"
+                    // Flash pixel Blue (for ISBD) and Red (for fail) slowly for 10 secs to indicate failure to get GPS Fix
+                    for (int i = 0; i < 5; i++)
+                    {
+                        pixelBlue();
+                        delay(1000);
+                        pixelRed();
+                        delay(1000);
+                    }
+                    pixelOff();
                     flag_gps_fix_succeeded = false;  // clear flag accordingly for use in subsequent states.
                     seconds_since_last_gps_read = 0; // xxx - I should not nesc be setting this back to zero in the event I could not get a position from GPS.
                                                      // Perhaps I should have a method to control multiple attempts, then give up til next major interval (don't want to consume battery on a failing GPS...)
@@ -261,6 +289,8 @@ void case_read_gps()
          */
         debugPrintln("case_read_GPS() - Powering down the GPS");
         gpsOFF(); // Disable power for the gps
+
+        pixelOff(); // cleanup pixel at end of state. It may have been left on during cycles above.
 
         seconds_since_last_gps_read = 0; // Read was ATTEMPTED so reset the timer.
 

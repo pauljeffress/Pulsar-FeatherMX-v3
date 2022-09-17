@@ -11,22 +11,7 @@
 long lastsec1 = 0;    // counter for my every Xsec debug prints.
 
 
-void setupPins()
-{
-    debugPrintln("setupPins()");
 
-    pinMode(LED_BUILTIN, OUTPUT); // Make the LED pin an output
-
-    // setup the 12v switched power output GPIO control pins.
-    pinMode(PI_PWR_PIN, OUTPUT);
-    digitalWrite(PI_PWR_PIN, LOW);
-    pinMode(STROBE_LIGHT_PWR_PIN, OUTPUT);
-    digitalWrite(STROBE_LIGHT_PWR_PIN, LOW);
-    pinMode(POWER_FEATHER_PWR_PIN, OUTPUT);
-    digitalWrite(POWER_FEATHER_PWR_PIN, LOW);
-
-    gpsOFF();
-}
 
 // Because Arduino print can't handle uint64_t I found this here https://forum.arduino.cc/t/printing-uint64_t/364646
 // and it works well.

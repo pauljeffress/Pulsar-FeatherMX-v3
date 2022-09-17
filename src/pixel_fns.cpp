@@ -63,5 +63,12 @@ void pixelMagenta()
     pixel.show();
 }
 
+void pixelYellow()
+{
+    pixel.setPixelColor(PIXEL_INDEX, 255,255,0);  // Magenta
+    pixel.show();
+}
+
+
 // END - pixel_fns.cpp
 

@@ -40,17 +40,19 @@ void do_iridium_locarb()
     bool iridiumOk = false; // flag used inside this function to manage errors along the way.
 
     // Initialise relevant globals for the start of this function.
-    num_waiting_messages = 1;    // xxxx - why do we set this to 1 to start?
-    countTXRXlaps = 0;           // reset counter
-    send_successful = false;     // assume false until explicitly set to true.
-    num_iridium_tx_attempts = 0; // reset counter
-    firstTX = true;              // we have only just entered this function so we must be about to do first TX.
-    validRX = false;             // assume false until explicitly set to true.
-    unvalidatedRX = false;       // assume false until explicitly set to true.
+    isbdNumWaitingMessages = 1;     // xxxx - why do we set this to 1 to start?
+    isbdCountTxRxLaps = 0;          // reset counter
+    isbdSendSuccessful = false;     // assume false until explicitly set to true.
+    isbdNumTxAttempts = 0;          // reset counter
+    isbdFirstTx = true;             // we have only just entered this function so we must be about to do first TX.
+    isbdValidRx = false;            // assume false until explicitly set to true.
+    isbdUnvalidatedRx = false;      // assume false until explicitly set to true.
 
     debugPrintln("do_iridium_locarb() - Starting");
 
     prep_binary_MO_message_locarb(); // Construct the binary message (in outBufferNew[]) that we are going to send to Ground.
+
+    printoutBufferNew();
 
 #ifdef BYPASS_IRIDIUM
     iridiumOk = true; // as we are not actually using the Iridium 9603N modem, we can just fake this.
@@ -60,7 +62,7 @@ void do_iridium_locarb()
 
     if (!iridiumOk)
     {
-        debugPrintln("\ndo_iridium_locarb() - ERROR - we were unable to successfully prep the Iridium modem!");
+        debugPrintln("do_iridium_locarb() - ERROR - we were unable to successfully prep the Iridium modem!");
     }
     else // i.e. iridiumOK = true
     {
@@ -83,45 +85,49 @@ void do_iridium_locarb()
          *   AND
          * 3. As an over riding rule, only ever go around the ISBD TX/RX loop a maximum of MAX_ISBD_LAPS times. This is a bit of a failsafe hack.
          */
-        while (((num_waiting_messages > 0) || (!send_successful && num_iridium_tx_attempts <= MAX_ISBD_TX_TRYS)) && (countTXRXlaps < MAX_ISBD_LAPS))
+        while (((isbdNumWaitingMessages > 0) || (!isbdSendSuccessful && isbdNumTxAttempts <= MAX_ISBD_TX_TRYS)) && (isbdCountTxRxLaps < MAX_ISBD_LAPS))
         {
             debugPrintln("do_iridium_locarb() - >>>>>>>>>>> TOP OF WHILE LOOP <<<<<<<<<<");
-            countTXRXlaps++;       // increment lap counter each time around the while() loop.
-            unvalidatedRX = false; // clear flag ready for use soon on each lap through this while()
+            isbdCountTxRxLaps++;       // increment lap counter each time around the while() loop.
+            isbdUnvalidatedRx = false; // clear flag ready for use soon on each lap through this while()
 
             zero_inBufferNew();
 
             /*
              * The first time around this while() we TX and RX, after that we RX only.
              */
-            if (firstTX == true)
+            if (isbdFirstTx == true)
             {
-                debugPrintln("do_iridium_locarb() - firstTX=true");
-                firstTX = false; // we only wanted to use this flag once, so clear it straight after use
+                debugPrintln("do_iridium_locarb() - isbdFirstTx=true");
+                isbdFirstTx = false; // we only wanted to use this flag once, so clear it straight after use
 #ifdef BYPASS_IRIDIUM
                 iridium_bypass_do_firstRXTX();
 #else
-                iridium_ISBD_do_firstRXTX();
+                isbdDoFirstRxTx();
 #endif
             }
+
+            /*
+             * This is only called to do 2nd, 3rd... RX, after the 1st TX/RX was successful.
+             */
             else // This is not the first time around the while loop, so we are RX'ing only from now on.
                  // There may be multiple Mobile Terminated messages waiting for us, all queued up, so we
                  // continue RXing (with a limit) to get them all.
                  // Note: Because you have to TX before you can RX with ISBD, we send a NULL message (to avoid wasted credits)
             {
-                debugPrintln("do_iridium_locarb() - because firstTX=false we are executing more RXs");
+                debugPrintln("do_iridium_locarb() - because isbdFirstTx=false we are executing more RXs");
 #ifndef BYPASS_IRIDIUM // We do not do multiple RX's when using the BYPASS link, the reason is non trivial and
-                       // is explained inn comments further below under the "if (validRX)" code.
-                iridium_ISBD_do_additionalRXs();
+                       // is explained inn comments further below under the "if (isbdValidRx)" code.
+                isbdDoAdditionalRxs();
 #endif
             }
 
-            if (unvalidatedRX)                    // Was a potential MT message received (from either ISBD or Serial BYPASS)?
-                validRX = check_MT_msg_iridium(); // If so, check if was valid MT formatted message.
+            if (isbdUnvalidatedRx)                    // Was a potential MT message received (from either ISBD or Serial BYPASS)?
+                isbdValidRx = isbdCheckMtMsg(); // If so, check if was valid MT formatted message.
             else
-                validRX = false; // explicitly clear the flag to be tidy.
+                isbdValidRx = false; // explicitly clear the flag to be tidy.
 
-            if (validRX)
+            if (isbdValidRx)
             {
                 // During bench testing via BYPASS path, when a 2nd ISBD MT message arrives at the AGT
                 // Serial (I2C/UART hw port), but the 1st one has not been read in by my parser,
@@ -137,8 +143,9 @@ void do_iridium_locarb()
                 while (Serial1.available())
                     Serial1.read();
 
-                store_received_MT_msg(); // Copies current inBufferNew into inBufferNewLatest and
-                                         // sets inBufferNewLatestSize = inBufferNewSize.
+                store_received_MT_msg();    // Copies current inBufferNew into inBufferNewLatest and
+                                            // sets inBufferNewLatestSize = inBufferNewSize.
+                printinBufferNew();         // Hex dumps the recently received inBufferNew to screen
 
                 debugPrintln("do_iridium_locarb() - we received a valid ISBD MT message. So setting the following flags...");
                 debugPrintln("do_iridium_locarb() - gotMsgFromGroundFlag = true");
@@ -150,8 +157,9 @@ void do_iridium_locarb()
 
             clear_mo_buffer();  // We always clear the MO message buffer after use.
 
-            update_waiting_msgs_iridium();
-        } // End of the big "while ((num_waiting_messages > 0).....)" loop where we tx/rx messages
+            update_waiting_msgs_iridium();  // gets this from data we already have in the isbdModem object, if the TX/RX worked earlier.
+
+        } // End of the big "while ((isbdNumWaitingMessages > 0).....)" loop where we tx/rx messages
 
         // XXXXXXXXXXXX - Once we get to here, we have done all we are going to do with ISBD TX/RX for this TXINT period. We have attempted
         // the TX and attempted as many RX's as there are MT msgs waiting for us.

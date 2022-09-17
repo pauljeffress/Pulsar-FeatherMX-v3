@@ -24,7 +24,6 @@
 
 // Includes from my various files here in this project
 #include "think_fns.h"
-#include "timer_counter_fns.h"
 #include "storage_fns.h"
 #include "power_fns.h"
 #include "serial_fns.h"
@@ -41,9 +40,15 @@
 #include "ISBD_fns.h"
 #include "pixel_fns.h"
 #include "prep_binary_MO_message_locarb.h"
+#include "MO_and_MT_messages.h"
 
 
 // Includes from various stuff I need from Pulsar_Shared_Source
+#include "PulsarShared.h"
+#include "timer_counter_fns.h"
+#include "mavlink_fns.h"
+#include "FmxSettings.h"
+#include "FmxSettings_fns.h"
 #include "CBP.h"    // my CAN Boat Protocol
 #include "can_fns.h"  
 #include "debug_fns.h"
@@ -52,12 +57,10 @@
 #include "pulsar_packer_fns.h"
 #include "pulsar_buffer_fns.h"
 #include "case_check_CANbus.h"
-#include "mavlink_fns.h"
-#include "FmxSettings_fns.h"
+
 #include "PowerFeatherSettings_fns.h"
 #include "TFTFeatherInternalSettings_fns.h"
 #include "pulsar_boat_tofrom_ground_fns.h"
-#include "MO_and_MT_messages.h"
 
 
 /*=======================*/
@@ -110,9 +113,6 @@ extern long lastsec1;
 /*============================*/
 /* Function Predefines        */
 /*============================*/
-//void case_loop_init();
-//void case_assess_situation();
-
 void case_tx_to_CANbus();
 void case_write_to_tft();
 void case_heartbeat_to_autopilot();

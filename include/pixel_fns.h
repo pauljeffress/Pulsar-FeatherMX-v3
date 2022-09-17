@@ -19,7 +19,7 @@
 /* define any struct's */
 
 /* extern global variables */
-extern Adafruit_NeoPixel pixel();
+//extern Adafruit_NeoPixel pixel(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 
 /* function pre defines */
@@ -29,6 +29,7 @@ void pixelRed();
 void pixelGreen();
 void pixelBlue();
 void pixelMagenta();
+void pixelYellow();
 
 
 #endif

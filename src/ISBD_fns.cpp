@@ -5,12 +5,12 @@
  *
  *
  */
-
+#include <arduino.h>
 #include "global.h"
-
 
 // Globals
 IridiumSBD isbdModem(Serial1, IRIDIUM_SLEEP_PIN, IRIDIUM_RING_INDICATOR_PIN); // Declare the IridiumSBD object (including the sleep (ON/OFF) and Ring Indicator pins)
+uint32_t lastISBDCallbackMillis = 0;                                          // used to control rate of output prints within ISBDCallback()
 
 // Functions
 
@@ -24,8 +24,13 @@ void ISBDSetup()
 {
     // Note, Serial1.begin(19200) MUST already be executed in serialSetup() prior to this function running.
     debugPrintln("ISBDSetup() - Starting");
+#ifdef BYPASS_IRIDIUM
+    debugPrintln("ISBDSetup() - BYPASS_IRIDIUM defined so skipping modem setup");
+#else
     prep_iridium_modem();
-    iridiumOFF();
+#endif
+    iridiumOFF();   // we do this as a safety thing whether we are bypassing Iridium or no.
+    
     // Note: We are not setting any flags as to the state of the modem, because even if it fails here,
     //       we want subsequent code to try an initialise it again when its needed, as we have nothing
     //       to loose by trying again.
@@ -33,7 +38,7 @@ void ISBDSetup()
 } // END - ISBDSetup()
 
 /*
- * IridiumSBD Callback - this code is called often by the ISBD library
+ * IridiumSBD Callback - this code is called VERY often (dozens of times per second) by the ISBD library
  * while the 9603 is doing things...
  * i.e during the execution of functions like modem.sendReceiveSBDBinary()
  * So we can see whats happening and take action (flash LED etc) if need be.
@@ -43,24 +48,25 @@ void ISBDSetup()
  */
 bool ISBDCallback()
 {
-    // Flash the onboard NeoPixel at 4 Hz
-    if ((millis() / 250) % 2 == 1)
+    // Flash the onboard NeoPixel at 1 Hz
+    if ((millis() / 2000) % 2 == 1)
         pixelMagenta();
     else
         pixelOff();
 
-    // Write alternating chars to Serial Monitor every second so we know things are still happening
-    if ((millis() / 1000) % 2 == 1)
+    // Write '+' chars to Serial Monitor every so often so we know things are still happening
+    if (millis() > (lastISBDCallbackMillis + 2000))
+    {
+        lastISBDCallbackMillis = millis(); // take a new timestamp
         debugPrint("+");
-    else
-        debugPrint("-");
+    }
 
     // Check the battery voltage now we are drawing current for the 9603
     check_power(true);                             // Read the 9603N bus voltage, and ask function to be silent
     if (myFmxSettings.FMX_BATT_V < FMX_BATT_LOW_V) // If voltage is low, stop Iridium send
     {
         Serial.print("***!!! LOW VOLTAGE (ISBDCallback): ");
-        Serial.print(((float)myFmxSettings.FMX_BATT_V/100.0),2);
+        Serial.print(((float)myFmxSettings.FMX_BATT_V / 100.0), 2);
         Serial.println("v !!!***");
         // xxx - we should log this to the OLA.
         return false; // Returning false causes IridiumSBD to terminate
@@ -102,7 +108,7 @@ void iridiumOFF()
 }
 
 /*
- * Turn on power to 9603N, enable the iridiumSerial (FMX to 9603N) port, set modem settings etc.
+ * Turn on power to 9603N, set modem settings etc.
  * Return boolean for success or failure
  */
 boolean prep_iridium_modem()
@@ -116,9 +122,9 @@ boolean prep_iridium_modem()
     iridiumON(); // Turn on power to the Iridium modem.
     delay(5000); // Give the iridium modem a few seconds to power up.
 
-    debugPrintln("prep_iridium_modem() - Start the serial port connected to the Iridium Modem");
-    Serial1.begin(19200);
-    delay(1000); // Allow time for the serial port to come up.
+    // debugPrintln("prep_iridium_modem() - Start the serial port connected to the Iridium Modem");
+    // Serial1.begin(19200);
+    // delay(1000); // Allow time for the serial port to come up.
 
     /* Relax timing constraints waiting for the supercap to recharge.
      * USB_POWER_PROFILE means assume we can't charge the supercaps fast as the whole project
@@ -135,9 +141,9 @@ boolean prep_iridium_modem()
     if (err != ISBD_SUCCESS)
     {
         // If the modem failed to start...   xxx - should we take more action here?
-        debugPrintln("prep_iridium_modem() - ERROR isbdModem.begin FAILED with error ");
-        debugPrintlnInt(err);
-        debugPrintln("!!!***");
+        debugPrint("prep_iridium_modem() - ERROR isbdModem.begin FAILED with error:");
+        debugPrintInt(err);
+        debugPrintln("  !!!***");
         iridiumOFF(); // Turn off power to the Iridium modem.
         prepResult = false;
     }
@@ -176,15 +182,15 @@ void zero_inBufferNew()
 /*
  *  check and validate a received MT msg in inBufferNew[]
  */
-boolean check_MT_msg_iridium()
+boolean isbdCheckMtMsg()
 {
     boolean prepResult = false; // track status of this preparation work.
     uint16_t len = 0;
 
-    debugPrintln("check_MT_msg_iridium() - Starting - validation checking of inBufferNew[]");
+    debugPrintln("isbdCheckMtMsg() - Starting - validation checking of inBufferNew[]");
 
     // Note: At this point we have inBufferNew[] supposedly containing a full MT message
-    //       AND we have inBufferNewSize = num bytes received. (should be 6Byte header + Paload Bytes + 4Byte trailer)
+    //       AND we have inBufferNewSize = num bytes received. (should be 6Byte header + Payload Bytes + 4Byte trailer)
 
     // 1st test
     // check the start delimiter, length, end delimiters and checksum.
@@ -193,7 +199,7 @@ boolean check_MT_msg_iridium()
     else
     {
         prepResult = false; // we failed this test.
-        debugPrintln("check_MT_msg_iridium() - FAILED 1st test");
+        debugPrintln("isbdCheckMtMsg() - FAILED 1st test");
     }
     // 2nd test
     if (prepResult) // i.e. we passed the previous test, so execute the next test.
@@ -212,7 +218,7 @@ boolean check_MT_msg_iridium()
         else
         {
             prepResult = false; // we failed this test.
-            debugPrintln("check_MT_msg_iridium() - FAILED 2nd test");
+            debugPrintln("isbdCheckMtMsg() - FAILED 2nd test");
         }
     }
 
@@ -225,7 +231,7 @@ boolean check_MT_msg_iridium()
         else
         {
             prepResult = false; // we failed this test.
-            debugPrintln("check_MT_msg_iridium() - FAILED 3rd test");
+            debugPrintln("isbdCheckMtMsg() - FAILED 3rd test");
             Serial.print("inBufferNewSize = ");
             Serial.println(inBufferNewSize);
             Serial.print("inBufferNew[inBufferNewSize-2] = ");
@@ -257,23 +263,23 @@ boolean check_MT_msg_iridium()
         else
         {
             prepResult = false; // we failed this test.
-            debugPrintln("check_MT_msg_iridium() - FAILED 4th test");
+            debugPrintln("isbdCheckMtMsg() - FAILED 4th test");
         }
     }
 
     if (prepResult)
-        Serial.println("check_MT_msg_iridium() - inBufferNew[] contains a valid MT message.");
+        Serial.println("isbdCheckMtMsg() - inBufferNew[] contains a valid MT message.");
     else
     {
-        debugPrintln("check_MT_msg_iridium() - ERROR - inBufferNew[] IS NOT a valid MT message.");
+        debugPrintln("isbdCheckMtMsg() - ERROR - inBufferNew[] IS NOT a valid MT message.");
         gotMsgFromGroundFlag = false; // clear the flag as we did NOT get a valid message from ground.
     }
 
-    debugPrintln("check_MT_msg_iridium() - Complete");
+    debugPrintln("isbdCheckMtMsg() - Complete");
 
     return prepResult;
 
-} // END - check_MT_msg_iridium()
+} // END - isbdCheckMtMsg()
 
 /*
  *  Store the successfully received and basically validated new MT msg we received
@@ -281,7 +287,7 @@ boolean check_MT_msg_iridium()
 void store_received_MT_msg()
 {
     debugPrintln("store_received_MT_msg() - executing - RX'd inBufferNew copied to inBufferNewLatest");
-    gotMsgFromGroundFlag = true;   // set the flag as we did get a valid message from ground.
+    gotMsgFromGroundFlag = true;       // set the flag as we did get a valid message from ground.
     seconds_since_last_iridium_rx = 0; // reset timer as iridium rx was successful
     // Note: at this point the most recently received MT message is copied into inBufferNewLatest
     //       to ensure it is not zero'd out if/when we do another attempted RX. The idea being
@@ -302,30 +308,30 @@ void clear_mo_buffer()
     err = isbdModem.clearBuffers(ISBD_CLEAR_MO); // Clear MO buffer
     if (err != ISBD_SUCCESS)
     {
-        debugPrintln("clear_mo_buffer() - ***!!! modem.clearBuffers failed with error ");
-        debugPrintlnInt(err);
-        debugPrintln("!!!***");
+        debugPrint("clear_mo_buffer() - ***!!! modem.clearBuffers failed with error:");
+        debugPrintInt(err);
+        debugPrintln("  !!!***");
     }
 #endif
 }
 
 /*
- * Update the global num_waiting_messages, which counts how many MT messages are still waiting to be RX'd by boat.
+ * Update the global isbdNumWaitingMessages, which counts how many MT messages are still waiting to be RX'd by boat.
  */
 void update_waiting_msgs_iridium()
 {
 #ifdef BYPASS_IRIDIUM // Bypassing Iridium
     debugPrintln("update_waiting_msgs_iridium() - BYPASS_IRIDIUM - so setting num waiting msgs to 0");
-    num_waiting_messages = 0; // Fake the remaining message count
-#else                         // Using Iridium
-    num_waiting_messages = isbdModem.getWaitingMessageCount();
+    isbdNumWaitingMessages = 0; // Fake the remaining message count
+#else                           // Using Iridium
+    isbdNumWaitingMessages = isbdModem.getWaitingMessageCount();
 #endif
     debugPrint("update_waiting_msgs_iridium() - The number of messages in the MT queue is:");
-    debugPrintlnInt(num_waiting_messages);
-    if (num_waiting_messages == 255)
+    debugPrintlnInt(isbdNumWaitingMessages);
+    if (isbdNumWaitingMessages == 255)
     {
         debugPrint("update_waiting_msgs_iridium() - As it is 255, that means none, setting to 0");
-        num_waiting_messages == 0;
+        isbdNumWaitingMessages == 0;
     }
 } // END - update_waiting_msgs_iridium()
 
@@ -337,14 +343,14 @@ void print_iridium_endstate()
     // once we get to here, we are finishing up, we will not be ISBD TX/RX'ing any more for now.
     debugPrintln("print_iridium_endstate() - exited the ISBD TX/RX while() loop");
     debugPrintln("print_iridium_endstate() - Values at exit are...");
-    debugPrint("print_iridium_endstate() - num_waiting_messages=");
-    debugPrintlnInt(num_waiting_messages);
-    debugPrint("print_iridium_endstate() - send_successful=");
-    debugPrintlnInt(send_successful);
-    debugPrint("print_iridium_endstate() - num_iridium_tx_attempts=");
-    debugPrintlnInt(num_iridium_tx_attempts);
-    debugPrint("print_iridium_endstate() - countTXRXlaps=");
-    debugPrintlnInt(countTXRXlaps);
+    debugPrint("print_iridium_endstate() - isbdNumWaitingMessages=");
+    debugPrintlnInt(isbdNumWaitingMessages);
+    debugPrint("print_iridium_endstate() - isbdSendSuccessful=");
+    debugPrintlnInt(isbdSendSuccessful);
+    debugPrint("print_iridium_endstate() - isbdNumTxAttempts=");
+    debugPrintlnInt(isbdNumTxAttempts);
+    debugPrint("print_iridium_endstate() - isbdCountTxRxLaps=");
+    debugPrintlnInt(isbdCountTxRxLaps);
     if (gotMsgFromGroundFlag)
     {
         debugPrint("print_iridium_endstate() - WE RECV'D VALID MT Message - inBufferNewLatestSize=");
@@ -365,8 +371,8 @@ void sleep_iridium_modem()
     if (err != ISBD_SUCCESS)
     {
         debugPrint("sleep_iridium_modem() - ***!!! modem.sleep failed with error:");
-        debugPrintlnInt(err);
-        debugPrintln("!!!***");
+        debugPrintInt(err);
+        debugPrintln("  !!!***");
     }
 #endif
 } // END - sleep_iridium_modem()

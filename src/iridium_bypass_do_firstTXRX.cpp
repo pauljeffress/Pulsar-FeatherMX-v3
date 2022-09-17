@@ -24,13 +24,13 @@ void iridium_bypass_do_firstRXTX()
     isbdTxSucceededFlag = true; // set the flag as we succeeded.
     contactGroundFlag = false; // clear the flag now that we have successfully done it.
     // err = ISBD_SUCCESS; // Fake successful transmit
-    send_successful = true;
+    isbdSendSuccessful = true;
     seconds_since_last_iridium_tx = 0; // reset timer as iridium tx was "successful"
 
-    // Flash pixel Blue (for ISBD) and Green (for success) slowly for 10 secs to indicate successful ISBD send
+    // Flash pixel Magenta (for ISBD) and Green (for success) slowly for 10 secs to indicate successful ISBD send
     for (int i = 0; i < 5; i++)
     {
-        pixelBlue();
+        pixelMagenta();
         delay(1000);
         pixelGreen();
         delay(1000);
@@ -75,9 +75,9 @@ void iridium_bypass_do_firstRXTX()
         // in MT message. The problem is the corresponding real ISBD receive code does not validate the
         // MT message it just fills a buffer with bytes, so they have to be validated later as on of our
         // properly formatted MT messages.  So in order to test that validation code that I am marking
-        // "unvalidatedRX = true" here because I want to test that validation code EVEN when I have
+        // "isbdUnvalidatedRx = true" here because I want to test that validation code EVEN when I have
         // received and pre validated an MT message vis the BYPASS link.
-        unvalidatedRX = true; // We have an unvalidated MT msg in inBufferNew.
+        isbdUnvalidatedRx = true; // We have an unvalidated MT msg in inBufferNew.
     }
     else
     {
@@ -91,9 +91,9 @@ void iridium_bypass_do_firstRXTX()
         // get a whole MT packet in the above code OR if we didn't then reset etc.
         recPulsarParseReset();
 
-        unvalidatedRX = false; // There is nothin in inBufferNew of use, to work on after here.
+        isbdUnvalidatedRx = false; // There is nothin in inBufferNew of use, to work on after here.
     }
-    firstTX = false; // clear the flag that marked this as the first time through and hence first TX.
+    isbdFirstTx = false; // clear the flag that marked this as the first time through and hence first TX.
 
     debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - Complete");
 } // END - iridium_bypass_do_firstRXTX()

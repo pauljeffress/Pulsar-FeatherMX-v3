@@ -49,7 +49,7 @@ void case_read_sensors()
     // is it time to do a routine sensor read?
     if (readSensorsFlag)
     {
-        debugPrintln("case_read_sensors() - time to execute");
+        debugPrintln("\ncase_read_sensors() - time to execute");
 
         readSensorsFlag = false; // reset the flag now that we are actioning it.
 

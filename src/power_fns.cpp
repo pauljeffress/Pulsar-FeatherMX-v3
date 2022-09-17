@@ -24,7 +24,7 @@ void check_power(bool silent)
 
         if (!silent)
         {
-            debugPrintln("case_check_power() - time to execute");
+            debugPrintln("\ncase_check_power() - time to execute");
             mp3.playFile(5); // "Checking Power"
             delay(2000);
         }

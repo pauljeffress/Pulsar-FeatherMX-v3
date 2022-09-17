@@ -10,8 +10,8 @@
 
 /* defines */
 
-#define FMX_READGPS_PERIOD_S            300
-
+#define FMX_READGPS_PERIOD_S                    300 // seconds
+#define FMX_POSTBOOT_CONTACT_GROUND_PERIOD_M    3   // minutes
 
 /* define any enums */
 
@@ -28,6 +28,8 @@ extern bool contactGroundFlag;
 extern bool gotMsgFromGroundFlag;
 extern bool txMsgToApFlag;
 extern bool isbdTxSucceededFlag;
+extern bool contactGroundFirstTimeFlag;
+extern bool processMsgFromGroundFlag;
 
 /* function pre defines */
 

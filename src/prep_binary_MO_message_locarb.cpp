@@ -211,20 +211,20 @@ void prep_binary_MO_message_locarb()
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT1>>8);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT1>>16);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT1>>24);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>8);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>16);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>24);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>8);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>16);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT1>>24);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUETYPE2);
     outBufferNew[pos++] = (uint8_t)(0); // I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT2);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT2>>8);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT2>>16);
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEINT2>>24);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>8);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>16);
-    outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>24);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>8);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>16);
+    outBufferNew[pos++] = (uint8_t)((uint32_t)myFmxSettings.AP_REQ_PARAM_VALUEFLOAT2>>24);
     // AutoPilot MISSION RESULT
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.AP_MISSION_RESULT);
     outBufferNew[pos++] = (uint8_t)(0); // I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
@@ -317,6 +317,11 @@ void prep_binary_MO_message_locarb()
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP3);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP4);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
     outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP5);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
+    outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP6);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
+    outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP7);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
+    outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP8);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
+    outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP9);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
+    outBufferNew[pos++] = (uint8_t)(myFmxSettings.FMX_CMD_RESP10);outBufferNew[pos++] = (uint8_t)(0); // xxx - I am taking a uint8_t and sending as a uint16_t to help GSE32 receive correctly
 
 
     // Now that we have finished building Payload we can go back and insert the Payload Length field correctly.

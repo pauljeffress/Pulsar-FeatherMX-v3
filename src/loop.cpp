@@ -55,17 +55,21 @@ void loop(void)
     // ************************************************************************************************
     // Contact Ground Station - use the ISBD link (or Serial bypass test code) to communicate with my Ground Station.
     case CONTACT_GROUND:
-        if (contactGroundFlag)   // only fire up the ISBD if we actually have a message to send.
+        case_contact_ground();
+        main_state = PROCESS_ISBD_RX;
+    break;
+
+    // ************************************************************************************************
+    // Properly store MT msg here on AGT, then action anything we received from the ground that is for the AGT itself
+    case PROCESS_ISBD_RX:
+        if (gotMsgFromGroundFlag)
         {
-            debugPrintln("\nloop() - contactGroundFlag = true, so lets Contact Ground Station.");
-            case_contact_ground();
-        }
-        else
-        {
-            //debugPrintln("\nloop() - not time to Contact the Ground Station yet");
+            debugPrintln("\nloop() - gotMsgFromGroundFlag = true, so lets process it.");
+            case_process_isbd_rx();
         }
         main_state = THINK; // XXX - TEMPORARY
     break;
+
 
 
     // // ************************************************************************************************

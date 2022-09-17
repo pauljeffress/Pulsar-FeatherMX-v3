@@ -4,6 +4,28 @@
 
 #include "global.h"
 
+#include "setup.h"
+
+/*
+ * setupPins() for the FMX
+ */
+void setupPins()
+{
+    debugPrintln("setupPins()");
+
+    pinMode(LED_BUILTIN, OUTPUT); // Make the LED pin an output
+
+    // setup the 12v switched power output GPIO control pins.
+    pinMode(PI_PWR_PIN, OUTPUT);
+    digitalWrite(PI_PWR_PIN, LOW);
+    pinMode(STROBE_LIGHT_PWR_PIN, OUTPUT);
+    digitalWrite(STROBE_LIGHT_PWR_PIN, LOW);
+    pinMode(POWER_FEATHER_PWR_PIN, OUTPUT);
+    digitalWrite(POWER_FEATHER_PWR_PIN, LOW);
+
+    gpsOFF();
+}
+
 
 /*============================
  * setup()
@@ -12,6 +34,9 @@
  ============================*/
 void setup()
 {
+    pixelSetup();   // prep the NeoPixel on the Feather.
+    pixelYellow();
+
     delay(5000); // Give me time to get Serial Monitor open if need be.     xxx
     
     Wire.begin();   // get I2C port ready for subsequent users (OLED, RTC etc)
@@ -43,7 +68,7 @@ void setup()
                              // Serial.end(); before putting the processor to sleep.
                              // Uncomment this line to enable extra debug messages to Serial    
 
-    pixelSetup();   // prep the NeoPixel on the Feather.
+
     MP3Setup();     // Needs to be after Serial and debugs are enabled, and Wire.begin()
 
     debugPrintln("================================================");
@@ -75,13 +100,14 @@ void setup()
     gpsSetup();
     ISBDSetup();
 
-    mavlink_unrequest_streaming_params_from_ap(); // I am trying to initially hush the AutoPilot (see my other mavlink stuff for explanation)   
+    mavlink_unrequest_streaming_params_from_ap(&Serial2); // I am trying to initially hush the AutoPilot (see my other mavlink stuff for explanation)   
     
     justBootedFlag = true;
     main_state = THINK;     // Ensure main state machine starts at correct first step.
 
     mp3.playFile(3); delay(2000); //Play F003.mp3 "Pulsar Initialisation Complete"
     oled.println("setup() - Complete");
+    pixelOff();
 
     debugPrintln("setup() - Complete");
 } // END - setup()

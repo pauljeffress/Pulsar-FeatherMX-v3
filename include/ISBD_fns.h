@@ -15,7 +15,7 @@
 #define IRIDIUM_SLEEP_PIN   -1              // -1 means unused
 #define IRIDIUM_RING_INDICATOR_PIN   -1     // -1 means unused
 
-//#define BYPASS_IRIDIUM                  // Uncomment this line to completely bypass using the Iridium modem (i.e don't charge supercaps, don't ISBD TX/RX etc) and use the test Serial connection insted.
+#define BYPASS_IRIDIUM                  // Uncomment this line to completely bypass using the Iridium modem (i.e don't charge supercaps, don't ISBD TX/RX etc) and use the test Serial connection insted.
 //#define SKIP_IRIDIUM_TX                 // Uncomment this line to only skip the Iridium SBD TX/RX cmds, for example if you want to test the code that charges the supercaps, but without using ISBD message credits
 #define ENABLE_ISBD_DIAGNOSTICS         // Uncomment to see IridiumSBD library specific diagnostics on Serial Monitor.
 
@@ -23,8 +23,8 @@
                                         // that we will temporarily store if there is more than one available from ISBD
                                         // during one ISBD session.
 
-#define MAX_ISBD_LAPS     3   // Max number of ISBD TX/RX's in one ISBD session. Looking to stop bizzare problems running away spending ISBD credits!
 #define MAX_ISBD_TX_TRYS  3   // Max num times we try to TX an MO message before giving up for until next TXINT.
+#define MAX_ISBD_LAPS     6   // Max number of ISBD TX/RX's in one ISBD session. Looking to stop bizzare problems running away spending ISBD credits!
 
 
 
@@ -35,7 +35,7 @@
 
 
 /* extern global variables */
-extern IridiumSBD isbdModem(Serial1, IRIDIUM_SLEEP_PIN, IRIDIUM_RING_INDICATOR_PIN);
+extern IridiumSBD isbdModem;
 
 
 /* function pre defines */
@@ -48,7 +48,7 @@ void iridiumOFF();
 boolean prep_iridium_modem();
 void zero_inBufferNewLatest();
 void zero_inBufferNew();
-boolean check_MT_msg_iridium();
+boolean isbdCheckMtMsg();
 void store_received_MT_msg();
 void clear_mo_buffer();
 void update_waiting_msgs_iridium();
