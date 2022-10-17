@@ -34,70 +34,62 @@ void setupPins()
  ============================*/
 void setup()
 {
-    pixelSetup();   // prep the NeoPixel on the Feather.
-    pixelYellow();
-
-    delay(5000); // Give me time to get Serial Monitor open if need be.     xxx
-    
+    setupPins(); // initialise all GPIOs
     Wire.begin();   // get I2C port ready for subsequent users (OLED, RTC etc)
 
-    myCANid = CBP_CANID_FEATHERMX; // Set myCANid based on defines in CBP.h
+    disableDebugging(); // Make sure the serial debug messages are disabled until the Serial port is open!
+    disableLogging();   // Make sure the serial logging messages (to OLA) are disabled until the Serial port is open! 
 
-    setupPins(); // initialise all GPIOs    
-    
-    OLEDMiniSetup();
-    oled.println("    ---  FMX   ---");
-    oled.println("setup() - underway");
-
-    for (int x = 0; x < 5; x++)
+    for (int x = 0; x < 5; x++) // Flash LED & give me time to get Serial Monitor open if need be.
     {
         digitalWrite(LED_BUILTIN, HIGH);
         delay(500);
         digitalWrite(LED_BUILTIN, LOW);
         delay(500);
     }
-    
-    disableDebugging(); // Make sure the serial debug messages are disabled until the Serial port is open ( see loop_init() )!
-    disableLogging(); // Make sure the serial logging messages (to OLA) are disabled until the Serial port is open ( see loop_init() )! 
 
-    serialSetup();  // Setup all Serial ports   
-
-    enableDebugging(Serial); // THIS LINE IS RIGHT HERE FOR A REASON. Because we re issue Serial.begin() for the console/debug port
-                             // just a few lines earlier here in serialSetup(), you need to enable the debug stuff that uses it
-                             // after you have done that.  For more info see case_zzz(), and you will see it explicitly does a
-                             // Serial.end(); before putting the processor to sleep.
-                             // Uncomment this line to enable extra debug messages to Serial    
-
-
-    MP3Setup();     // Needs to be after Serial and debugs are enabled, and Wire.begin()
+    serialSetup();      // Setup all Serial ports   
+    enableDebugging(Serial);
+    enableLogging(Serial3);
 
     debugPrintln("================================================");
     debugPrintln("************************************************");
     debugPrintln("================================================");
     debugPrintln("        Pulsar FeatherMx Reset/PowerOn          ");   
-    enableLogging(Serial3); // THIS LINE IS RIGHT HERE FOR A REASON. See explanation above for enableDebugging(Serial);
 
-    
     logPrintln("================================================");
     logPrintln("************************************************");
     logPrintln("================================================");
     logPrintln("        Pulsar FeatherMx Reset/PowerOn          "); 
-    
-    
+
+    pixelSetup();   // prep the NeoPixel on the Feather.
+    pixelYellow();  // set onboard NeoPixel to Yellow
+
+    OLEDMiniSetup();
+    oled.println("    ---  FMX   ---");
+    oled.println("setup() - underway");
+
+    MP3Setup();     // Needs to be after Serial and debugs are enabled, and Wire.begin()
+
     setupFmxSettings();     // initialise FmxSetting from defaults or EEPROM stored values if present.
-
-
 
     initTFTFeatherInternalSettings();
     initPowerFeatherSettings();
     initMAVLinkSettings();  
 
     RTCSetup(&Wire);
-    CANStatus = CANSetup();     
+
+    myCANid = CBP_CANID_FEATHERMX; // Set myCANid based on defines in CBP.h
+    CANStatus = CANSetup();  
+
     timerCounterSetup();  
+
     actuatorsSetup();  
+
     sensorsSetup(); 
+
     gpsSetup();
+
     ISBDSetup();
 
     mavlink_unrequest_streaming_params_from_ap(&Serial2); // I am trying to initially hush the AutoPilot (see my other mavlink stuff for explanation)   
@@ -110,4 +102,5 @@ void setup()
     pixelOff();
 
     debugPrintln("setup() - Complete");
+    logPrintln("setup() - Complete");
 } // END - setup()
