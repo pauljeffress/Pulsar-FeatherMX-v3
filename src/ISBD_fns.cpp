@@ -24,11 +24,16 @@ void ISBDSetup()
 {
     // Note, Serial1.begin(19200) MUST already be executed in serialSetup() prior to this function running.
     debugPrintln("ISBDSetup() - Starting");
-#ifdef BYPASS_IRIDIUM
-    debugPrintln("ISBDSetup() - BYPASS_IRIDIUM defined so skipping modem setup");
-#else
+    // I have commented out the below few lines as we should setup
+    // the modem every time we startup.  No need to skip it just 
+    // because we are in bypass mode.  Also, this way if I switch from
+    // bypass to actually using the Iridium modem (via a dip sw change
+    // while code is running) we will have had the correct setup happen.
+    // if (flag_bypass_iridium)
+    //     debugPrintln("ISBDSetup() - WARNING:flag_bypass_iridium set so skipping modem setup");
+    // else
     prep_iridium_modem();
-#endif
+
     iridiumOFF();   // we do this as a safety thing whether we are bypassing Iridium or no.
     
     // Note: We are not setting any flags as to the state of the modem, because even if it fails here,
@@ -133,7 +138,7 @@ boolean prep_iridium_modem()
      * See https://github.com/sparkfun/SparkFun_IridiumSBD_I2C_Arduino_Library/tree/main/documentation#power-considerations
      */
     isbdModem.setPowerProfile(IridiumSBD::USB_POWER_PROFILE);
-
+    isbdModem.adjustATTimeout(180);
     // Begin satellite modem operation
     debugPrintln("prep_iridium_modem() - Starting Iridium Modem...");
     err = isbdModem.begin();
@@ -154,6 +159,7 @@ boolean prep_iridium_modem()
     }
     debugPrintln("prep_iridium_modem() - Complete");
     return prepResult;
+
 
 } // END - prep_iridium_modem()
 
@@ -302,17 +308,18 @@ void store_received_MT_msg()
  */
 void clear_mo_buffer()
 {
-#ifndef BYPASS_IRIDIUM // i.e. we are using the Iridium
-    int err;           // general error tracking within this function
-    debugPrintln("clear_mo_buffer() - Clearing the MO buffer.");
-    err = isbdModem.clearBuffers(ISBD_CLEAR_MO); // Clear MO buffer
-    if (err != ISBD_SUCCESS)
+    if (!flag_bypass_iridium) // i.e. we are using the Iridium
     {
-        debugPrint("clear_mo_buffer() - ***!!! modem.clearBuffers failed with error:");
-        debugPrintInt(err);
-        debugPrintln("  !!!***");
+        int err;           // general error tracking within this function
+        debugPrintln("clear_mo_buffer() - Clearing the MO buffer.");
+        err = isbdModem.clearBuffers(ISBD_CLEAR_MO); // Clear MO buffer
+        if (err != ISBD_SUCCESS)
+        {
+            debugPrint("clear_mo_buffer() - ***!!! modem.clearBuffers failed with error:");
+            debugPrintInt(err);
+            debugPrintln("  !!!***");
+        }
     }
-#endif
 }
 
 /*
@@ -320,17 +327,19 @@ void clear_mo_buffer()
  */
 void update_waiting_msgs_iridium()
 {
-#ifdef BYPASS_IRIDIUM // Bypassing Iridium
-    debugPrintln("update_waiting_msgs_iridium() - BYPASS_IRIDIUM - so setting num waiting msgs to 0");
-    isbdNumWaitingMessages = 0; // Fake the remaining message count
-#else                           // Using Iridium
-    isbdNumWaitingMessages = isbdModem.getWaitingMessageCount();
-#endif
+    if (flag_bypass_iridium) // Bypassing Iridium
+    {
+        debugPrintln("update_waiting_msgs_iridium() - WARNING: flag_bypass_iridium SET - so setting num waiting msgs to 0");
+        isbdNumWaitingMessages = 0; // Fake the remaining message count
+    }
+    else                           // Using Iridium
+        isbdNumWaitingMessages = isbdModem.getWaitingMessageCount();
+
     debugPrint("update_waiting_msgs_iridium() - The number of messages in the MT queue is:");
     debugPrintlnInt(isbdNumWaitingMessages);
     if (isbdNumWaitingMessages == 255)
     {
-        debugPrint("update_waiting_msgs_iridium() - As it is 255, that means none, setting to 0");
+        debugPrintln("update_waiting_msgs_iridium() - As it is 255, that means none, setting to 0");
         isbdNumWaitingMessages == 0;
     }
 } // END - update_waiting_msgs_iridium()
@@ -363,16 +372,17 @@ void print_iridium_endstate()
  */
 void sleep_iridium_modem()
 {
-#ifndef BYPASS_IRIDIUM
-    // xxx - do we need to do this given we are about to turn power off to the Iridium Modem????
-    int err; // general error tracking within this function
-    debugPrintln("sleep_iridium_modem() - Putting the Iridium modem to sleep.");
-    err = isbdModem.sleep();
-    if (err != ISBD_SUCCESS)
+    if (!flag_bypass_iridium)   
     {
-        debugPrint("sleep_iridium_modem() - ***!!! modem.sleep failed with error:");
-        debugPrintInt(err);
-        debugPrintln("  !!!***");
+        // xxx - do we need to do this given we are about to turn power off to the Iridium Modem????
+        int err; // general error tracking within this function
+        debugPrintln("sleep_iridium_modem() - Putting the Iridium modem to sleep.");
+        err = isbdModem.sleep();
+        if (err != ISBD_SUCCESS)
+        {
+            debugPrint("sleep_iridium_modem() - ***!!! modem.sleep failed with error:");
+            debugPrintInt(err);
+            debugPrintln("  !!!***");
+        }
     }
-#endif
 } // END - sleep_iridium_modem()

@@ -231,6 +231,9 @@ void prep_binary_MO_message_locarb()
 
     // FMX Stuff
     // =========
+    debugPrint("myFmxSettings.FMX_BATT_V"); debugPrintlnInt(myFmxSettings.FMX_BATT_V);
+    debugPrint("myFmxSettings.FMX_TEMP"); debugPrintlnInt(myFmxSettings.FMX_TEMP);
+    debugPrint("myFmxSettings.FMX_RH"); debugPrintlnInt(myFmxSettings.FMX_RH);
     outBufferNew[pos++] = lowByte(myFmxSettings.FMX_BATT_V);
     outBufferNew[pos++] = highByte(myFmxSettings.FMX_BATT_V);
     outBufferNew[pos++] = lowByte(myFmxSettings.FMX_TEMP);

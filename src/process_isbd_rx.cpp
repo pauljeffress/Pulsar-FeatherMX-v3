@@ -49,7 +49,7 @@ void case_process_isbd_rx()
 
     debugPrintln("case_process_isbd_rx() - Finished local FMX actions");
 
-
+    gotMsgFromGroundFlag = false;   // Clear flag as we have actioned it.
 
     debugPrintln("case_process_isbd_rx() - Complete");
 }   // END - case_process_isbd_rx()

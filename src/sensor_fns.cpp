@@ -102,6 +102,8 @@ void case_read_sensors()
             float veml_lux = veml.readLux();
             Serial.print("lux: ");
             Serial.println(veml_lux);
+            myFmxSettings.FMX_AMBIENTLIGHT = veml_lux; // value in lux
+
 
         } // END - if (sensor_ambientlight_status)
 

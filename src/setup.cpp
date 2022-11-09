@@ -15,6 +15,8 @@ void setupPins()
 
     pinMode(LED_BUILTIN, OUTPUT); // Make the LED pin an output
 
+    DIPswSetup();
+
     // setup the 12v switched power output GPIO control pins.
     pinMode(PI_PWR_PIN, OUTPUT);
     digitalWrite(PI_PWR_PIN, LOW);
@@ -35,6 +37,7 @@ void setupPins()
 void setup()
 {
     setupPins(); // initialise all GPIOs
+
     Wire.begin();   // get I2C port ready for subsequent users (OLED, RTC etc)
 
     disableDebugging(); // Make sure the serial debug messages are disabled until the Serial port is open!
@@ -61,6 +64,8 @@ void setup()
     logPrintln("************************************************");
     logPrintln("================================================");
     logPrintln("        Pulsar FeatherMx Reset/PowerOn          "); 
+
+    DIPswCheck();    // check status of DIP switches and set appropriate flags.
 
     pixelSetup();   // prep the NeoPixel on the Feather.
     pixelYellow();  // set onboard NeoPixel to Yellow

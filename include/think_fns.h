@@ -10,7 +10,7 @@
 
 /* defines */
 
-#define FMX_READGPS_PERIOD_S                    300 // seconds
+#define FMX_READGPS_PERIOD_S                    (50 * 60) // seconds
 #define FMX_POSTBOOT_CONTACT_GROUND_PERIOD_M    3   // minutes
 
 /* define any enums */

@@ -15,7 +15,6 @@
 #define IRIDIUM_SLEEP_PIN   -1              // -1 means unused
 #define IRIDIUM_RING_INDICATOR_PIN   -1     // -1 means unused
 
-//#define BYPASS_IRIDIUM                  // Uncomment this line to completely bypass using the Iridium modem (i.e don't charge supercaps, don't ISBD TX/RX etc) and use the test Serial connection insted.
 //#define SKIP_IRIDIUM_TX                 // Uncomment this line to only skip the Iridium SBD TX/RX cmds, for example if you want to test the code that charges the supercaps, but without using ISBD message credits
 #define ENABLE_ISBD_DIAGNOSTICS         // Uncomment to see IridiumSBD library specific diagnostics on Serial Monitor.
 

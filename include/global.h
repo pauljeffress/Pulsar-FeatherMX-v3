@@ -41,6 +41,7 @@
 #include "pixel_fns.h"
 #include "prep_binary_MO_message_locarb.h"
 #include "MO_and_MT_messages.h"
+#include "DIPsw_fns.h"
 
 
 // Includes from various stuff I need from Pulsar_Shared_Source

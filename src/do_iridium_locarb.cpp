@@ -13,7 +13,8 @@
 #include "global.h"
 
 // Notes
-// 1. The #define BYPASS_IRIDIUM in global.h has big involvement here. If it's defined we reroute the data we would
+// 1. The flag_bypass_iridium, which is controlled by a DIP Switch, has big involvement here. 
+//    If it's defined we reroute the data we would
 //    normally TX/RX with the Ground Station via ISBD, to be sent via the test Serial link to the GSE32 instead.
 //    The supercap charging and the ISBD radio are not turned on at all.
 //
@@ -54,11 +55,10 @@ void do_iridium_locarb()
 
     printoutBufferNew();
 
-#ifdef BYPASS_IRIDIUM
-    iridiumOk = true; // as we are not actually using the Iridium 9603N modem, we can just fake this.
-#else
-    iridiumOk = prep_iridium_modem(); // Get serial link to 9603N and the 9603N itself ready
-#endif
+    if (flag_bypass_iridium)
+        iridiumOk = true; // as we are not actually using the Iridium 9603N modem, we can just fake this.
+    else
+        iridiumOk = prep_iridium_modem(); // Get serial link to 9603N and the 9603N itself ready
 
     if (!iridiumOk)
     {
@@ -100,11 +100,10 @@ void do_iridium_locarb()
             {
                 debugPrintln("do_iridium_locarb() - isbdFirstTx=true");
                 isbdFirstTx = false; // we only wanted to use this flag once, so clear it straight after use
-#ifdef BYPASS_IRIDIUM
-                iridium_bypass_do_firstRXTX();
-#else
-                isbdDoFirstRxTx();
-#endif
+                if (flag_bypass_iridium) 
+                    iridium_bypass_do_firstRXTX();
+                else
+                    isbdDoFirstRxTx();
             }
 
             /*
@@ -116,10 +115,9 @@ void do_iridium_locarb()
                  // Note: Because you have to TX before you can RX with ISBD, we send a NULL message (to avoid wasted credits)
             {
                 debugPrintln("do_iridium_locarb() - because isbdFirstTx=false we are executing more RXs");
-#ifndef BYPASS_IRIDIUM // We do not do multiple RX's when using the BYPASS link, the reason is non trivial and
+                if (!flag_bypass_iridium) // We do not do multiple RX's when using the BYPASS link, the reason is non trivial and
                        // is explained inn comments further below under the "if (isbdValidRx)" code.
                 isbdDoAdditionalRxs();
-#endif
             }
 
             if (isbdUnvalidatedRx)                    // Was a potential MT message received (from either ISBD or Serial BYPASS)?

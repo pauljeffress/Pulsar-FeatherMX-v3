@@ -49,7 +49,7 @@ void isbdDoFirstRxTx()
 #endif
 
     // Evaluate error/success of Iridium TX/RX attempt
-    if (err == 0)
+    if (err == 0)   // Succeeded in TX
     {
         debugPrintln("\nisbdDoFirstRxTx() - ISBD TX/RX Succeeded");
         debugPrintln("isbdDoFirstRxTx() -  so setting the following flags...");
@@ -78,9 +78,9 @@ void isbdDoFirstRxTx()
         else
             isbdUnvalidatedRx = false; // explicitly clear flag to be tidy.
     }
-    else
+    else    // Failed to TX
     {
-        Serial.print("isbdDoFirstRxTx() - ISBD TX/RX FAILED with status code:");
+        Serial.print("\nisbdDoFirstRxTx() - ISBD TX/RX FAILED with status code:");
         Serial.println(err);
         oled.print("ISBD Fail err:");
         oled.println(err);
@@ -95,15 +95,17 @@ void isbdDoFirstRxTx()
         isbdTxSucceededFlag = false; // ensure the flag is cleared as we FAILED.
         contactGroundFlag = false;   // clear the flag now that we have successfully done it.
         isbdUnvalidatedRx = false;   // explicitly clear flag to be tidy.
-        // Flash pixel Magenta (for ISBD) and Red (for failure) slowly for 10 secs to indicate failed ISBD send
-        for (int i = 0; i < 5; i++)
-        {
-            pixelMagenta();
-            delay(1000);
-            pixelRed();
-            delay(1000);
-        }
-        pixelOff();
+
+        // I have commented out the below Pixel flashing as we likely want to retry a TX/RX immediately (a Sat may come into view).
+        // // Flash pixel Magenta (for ISBD) and Red (for failure) slowly for 10 secs to indicate failed ISBD send
+        // for (int i = 0; i < 5; i++)
+        // {
+        //     pixelMagenta();
+        //     delay(1000);
+        //     pixelRed();
+        //     delay(1000);
+        // }
+        // pixelOff();
 
         seconds_since_last_iridium_tx = 0; // reset timer as iridium tx's attempted but have failed.
     }

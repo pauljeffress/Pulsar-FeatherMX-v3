@@ -39,6 +39,8 @@ bool processMsgFromGroundFlag = false;
  */
 void case_think()
 {
+    DIPswCheck();   // Always check and see if any switches have changed.
+
     /*
      *  Flag any actions needed due to having just booted/reset.
      */

@@ -38,15 +38,21 @@ void case_contact_ground()
     {
         debugPrintln("\ncontact_ground() - Starting");
         oled.print("contact_ground()");
-#ifdef BYPASS_IRIDIUM // print debugs/oled for BYPASS mode
-        debugPrintln("contact_ground() - Iridium BYPASS mode (using SERIAL TEST LINK)");
-        oled.println("w/BYPASS");
-#else // print debugs/oled for using Iridium mode
-        debugPrintln("contact_ground() - Iridium real TX/RX mode");
-        oled.println("w/ISBD");
-#endif
+        if(flag_bypass_iridium) // print debugs/oled for BYPASS mode
+        {
+            debugPrintln("contact_ground() - Iridium BYPASS mode (using SERIAL TEST LINK)");
+            oled.println("w/BYPASS");
+        }
+        else // print debugs/oled for using Iridium mode
+        {
+            debugPrintln("contact_ground() - Iridium real TX/RX mode");
+            oled.println("w/ISBD");
+        }
         
-        
+        // prep/update any additional variables, just before we send a message to ground.
+        myFmxSettings.FMX_UPTIME_S = seconds_since_reset_or_powercycle;
+
+
         do_iridium_locarb();    // do/attempt the whole ISBD TX/RX's
 
         seconds_since_last_iridium_tx = 0; // reset the counter.       xxx - should we have two counters, one for tx_attemps and one for tx_success
