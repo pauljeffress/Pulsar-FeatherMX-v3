@@ -17,6 +17,10 @@ void setupPins()
 
     DIPswSetup();
 
+    // setup Iridium 9603N Modem power control pin
+    pinMode(IRIDIUM_PWR_FET_PIN, OUTPUT);
+    digitalWrite(IRIDIUM_PWR_FET_PIN, LOW);  // start with it off.
+
     // setup the 12v switched power output GPIO control pins.
     pinMode(PI_PWR_PIN, OUTPUT);
     digitalWrite(PI_PWR_PIN, LOW);

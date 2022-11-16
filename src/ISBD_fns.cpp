@@ -32,6 +32,7 @@ void ISBDSetup()
     // if (flag_bypass_iridium)
     //     debugPrintln("ISBDSetup() - WARNING:flag_bypass_iridium set so skipping modem setup");
     // else
+    
     prep_iridium_modem();
 
     iridiumOFF();   // we do this as a safety thing whether we are bypassing Iridium or no.

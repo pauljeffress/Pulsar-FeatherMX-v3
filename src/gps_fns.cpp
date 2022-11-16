@@ -198,6 +198,9 @@ void case_read_gps()
                         Serial.println(F("GNSS + Dead reckoning"));
                     else if (fixType == 5)
                         Serial.println(F("Time only"));
+                    else
+                        Serial.println(F("WARNING NOT EXPECTED FIX TYPE"));
+
                     oled.print("Fix:");
                     if (fixType == 0)
                         oled.println("No fix");
@@ -211,6 +214,8 @@ void case_read_gps()
                         oled.println("GNSS + Dead reckoning");
                     else if (fixType == 5)
                         oled.println("Time only");
+                    else
+                        oled.println("BAD NUM");
 
                     // Check if we have timed out, which will be evaluated at next pass through the while()
                     if ((millis() - start_ms) >= (GPS_FIX_TIMEOUT_S * 1000UL))
@@ -230,7 +235,7 @@ void case_read_gps()
                 /*
                  *  If we got a suitable fix type above then quickly use the GPS to get all the time and position data from the GNSS constellation.
                  */
-                if (fixType >= GPS_MIN_FIX_TYPE)
+                if (fixType == GPS_MIN_FIX_TYPE)
                 {
                     debugPrintln("case_read_GPS() - A suitable quality fix was found!");
                     myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_FIX_OK;
