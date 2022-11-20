@@ -60,59 +60,39 @@ void loop(void)
     break;
 
     // ************************************************************************************************
-    // Properly store MT msg here on AGT, then action anything we received from the ground that is for the AGT itself
+    // Properly store MT msg here on AGT, then action anything we received from the ground that is for the FMX itself
     case PROCESS_ISBD_RX:
         if (gotMsgFromGroundFlag)
         {
             debugPrintln("\nloop() - gotMsgFromGroundFlag = true, so lets process it.");
             case_process_isbd_rx();
         }
-        main_state = THINK; // XXX - TEMPORARY
+        main_state = TX_TO_CANBUS; // XXX - TEMPORARY
     break;
 
 
+    // ************************************************************************************************
+    // If we need to, send info onto the CAN bus
+    case TX_TO_CANBUS:
+        case_tx_to_CANbus();
+        main_state = CHECK_CANBUS; // Set next state
+        break;
 
-    // // ************************************************************************************************
-    // // If we need to, send info onto the CAN bus
-    // case TX_TO_CANBUS:
-    //     case_tx_to_CANbus();
-    //     main_state = CHECK_CANBUS; // Set next state
-    //     break;
+    // ************************************************************************************************
+    // check if any packets received via CAN bus.
+    case CHECK_CANBUS:
+        case_check_CANbus();
+        main_state = HEARTBEAT_TO_AP; // Set next state
+        break;
 
-    // // ************************************************************************************************
-    // // check if any packets received via CAN bus.
-    // case CHECK_CANBUS:
-    //     case_check_CANbus();
-    //     main_state = HEARTBEAT_TO_AP; // Set next state
-    //     break;
+    // ************************************************************************************************
+    // Send a MAVLink HEARTBEAT to the Autopilot.
+    case HEARTBEAT_TO_AP:
+        case_heartbeat_to_autopilot();
+        main_state = THINK; // Set next state
+        break;
 
-    // // ************************************************************************************************
-    // // Send a MAVLink HEARTBEAT to the Autopilot.
-    // case HEARTBEAT_TO_AP:
-    //     case_heartbeat_to_autopilot();
-    //     main_state = RX_FROM_AGT; // Set next state
-    //     break;
 
-    // // ************************************************************************************************
-    // // Check if the AGT has sent us a datum
-    // case RX_FROM_AGT:
-    //     case_rx_from_agt();
-    //     main_state = PROCESS_AGT; // Set next state
-    //     break;
-
-    // // ************************************************************************************************
-    // // process it if it has and set appropriate flags
-    // case PROCESS_AGT:
-    //     case_process_agt();
-    //     main_state = PROCESS_AGT_FOR_AP; // Set next state
-    //     break;
-
-    // // ************************************************************************************************
-    // // process it if it has and set appropriate flags
-    // case PROCESS_AGT_FOR_AP:
-    //     case_process_agt_for_ap();
-    //     main_state = TX_TO_AP; // Set next state
-    //     break;
 
     // // ************************************************************************************************
     // // Send Mavlink data to the autopilot.

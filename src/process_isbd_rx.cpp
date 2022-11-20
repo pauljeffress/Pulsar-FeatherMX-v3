@@ -23,11 +23,11 @@ void case_process_isbd_rx()
     
     inBuffer_to_mt_structs();   // Parses the recently received inBuffer and populates both pulsar_mt_msg and global_mission_subset.
 
-    pulsar_mt_msg_print(); 
-    global_mission_subset_print();
+    pulsar_mt_msg_print();          // Print the just populated pulsar_mt_msg struct
+    global_mission_subset_print();  // Print the just populated global_mission_subset struct
     
     /*
-     * Local FMX actions
+     * Do Local FMX actions
      */
     debugPrintln("case_process_isbd_rx() - Do local FMX actions");
     debugPrint("case_process_isbd_rx() - MT Msg Origin Timestamp:");pulsar_timestamp_print(pulsar_mt_msg.mt_send_timestamp_unix_s);
@@ -48,6 +48,16 @@ void case_process_isbd_rx()
 
 
     debugPrintln("case_process_isbd_rx() - Finished local FMX actions");
+
+    /*
+     * Do AP actions
+     */
+    debugPrintln("case_process_isbd_rx() - Do AP actions");
+
+    process_MT_msg_for_ap();    // Process recently received MT msg and set appropriate flags
+    tx_to_autopilot();          // Based on above processing, send Mavlink data/cmds to the autopilot.
+
+    debugPrintln("case_process_isbd_rx() - Finished AP actions");
 
     gotMsgFromGroundFlag = false;   // Clear flag as we have actioned it.
 

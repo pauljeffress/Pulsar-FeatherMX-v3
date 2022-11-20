@@ -24,6 +24,11 @@
 /* define any struct's */
 
 /* extern global variables */
+extern bool DIPsw1_status;
+extern bool DIPsw2_status;
+extern bool DIPsw3_status;
+extern bool DIPsw4_status;
+extern bool DIPsw5_status;
 extern bool DIPsw1_last_checked_status;
 extern bool DIPsw2_last_checked_status;
 extern bool DIPsw3_last_checked_status;

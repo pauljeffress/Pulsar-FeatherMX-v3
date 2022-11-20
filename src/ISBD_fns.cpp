@@ -24,16 +24,12 @@ void ISBDSetup()
 {
     // Note, Serial1.begin(19200) MUST already be executed in serialSetup() prior to this function running.
     debugPrintln("ISBDSetup() - Starting");
-    // I have commented out the below few lines as we should setup
-    // the modem every time we startup.  No need to skip it just 
-    // because we are in bypass mode.  Also, this way if I switch from
-    // bypass to actually using the Iridium modem (via a dip sw change
-    // while code is running) we will have had the correct setup happen.
-    // if (flag_bypass_iridium)
-    //     debugPrintln("ISBDSetup() - WARNING:flag_bypass_iridium set so skipping modem setup");
-    // else
-    
-    prep_iridium_modem();
+    // Don't try and prep the modem if we are in BYPASS mode, because it's unreachable over serial
+    // as the big switch for the TX/RX lines will be flicked to BYPASS too.
+    if (flag_bypass_iridium)
+         debugPrintln("ISBDSetup() - WARNING:flag_bypass_iridium set so skipping modem setup");
+    else
+        prep_iridium_modem();
 
     iridiumOFF();   // we do this as a safety thing whether we are bypassing Iridium or no.
     

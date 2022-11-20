@@ -112,6 +112,8 @@ void case_read_gps()
         while ((!flag_gps_fix_succeeded) && (numGPSattempts < GPS_MAX_TRIES)) // control how many times we try to get a reading before moving on.
         {
             numGPSattempts++; // increment attempts counter.
+            fixType = 0;    // reset it for this attempt.
+            sivCount = 0;   // reset it for this attempt.
             debugPrint("case_read_GPS() - Try: ");
             debugPrintInt(numGPSattempts);
             debugPrint(" of ");
@@ -167,7 +169,7 @@ void case_read_gps()
                 timedOut = false;
                 start_ms = millis(); // record start time.
                 // debugPrint("case_read_GPS() - start(mS)=");debugPrintlnInt(start);
-                while (!timedOut && (fixType < GPS_MIN_FIX_TYPE)) // do this until we either get a suitable quality fix or we time out.
+                while (!timedOut && (fixType != GPS_MIN_FIX_TYPE)) // do this until we either get a suitable quality fix or we time out.
                 {
                     // Flash the onboard NeoPixel at 1 Hz
                     if ((millis() / 2000) % 2 == 1)
@@ -178,14 +180,16 @@ void case_read_gps()
                     /*
                      *  Attempt to get a GPS fix.
                      */
-                    sivCount = myGNSS.getSIV(); // How many Satelites In View (SIV) at the moment?
+                    sivCount = myGNSS.getSIV(); // How many Satellites In View (SIV) at the moment?
                     debugPrint("case_read_gps() - SIV: ");
                     debugPrintInt(sivCount);
                     oled.print("SIV:");
                     oled.print(sivCount);
 
                     fixType = myGNSS.getFixType(); // What type of fix is available from the GPS at the moment?
-                    debugPrint(" Fix: ");
+                    debugPrint(" fixType: ");
+                    debugPrintInt(fixType);
+                    debugPrint(", ");
                     if (fixType == 0)
                         Serial.println(F("No fix"));
                     else if (fixType == 1)

@@ -42,6 +42,9 @@
 #include "prep_binary_MO_message_locarb.h"
 #include "MO_and_MT_messages.h"
 #include "DIPsw_fns.h"
+#include "CAN_tx_fns.h"
+#include "heartbeat_to_autopilot_fns.h"
+#include "process_MT_msg_for_ap.h"
 
 
 // Includes from various stuff I need from Pulsar_Shared_Source
@@ -114,16 +117,13 @@ extern long lastsec1;
 /*============================*/
 /* Function Predefines        */
 /*============================*/
-void case_tx_to_CANbus();
+
 void case_write_to_tft();
-void case_heartbeat_to_autopilot();
+
 void case_rx_from_autopilot();
 void case_process_autopilot();
 void case_tx_to_autopilot();
-void case_rx_from_agt();
-void case_process_agt();
-void case_process_agt_for_ap();
-void case_tx_to_agt();
+
 void case_tx_to_logger();
 
 
