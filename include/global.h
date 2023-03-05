@@ -45,6 +45,9 @@
 #include "CAN_tx_fns.h"
 #include "heartbeat_to_autopilot_fns.h"
 #include "process_MT_msg_for_ap.h"
+#include "tx_to_autopilot.h"
+#include "rx_from_autopilot.h"
+
 
 
 // Includes from various stuff I need from Pulsar_Shared_Source
@@ -102,11 +105,10 @@ extern Uart Serial2;
 extern Uart Serial3;
 
 
-extern bool flag_tx_msg_to_agt;
-extern bool flag_got_msg_from_agt;
-extern bool flag_got_msg_from_agt_with_mission;
-extern bool flag_do_first_agt_tx;
-extern bool flag_first_agt_tx;
+
+//extern bool flag_got_msg_from_agt;        // old code and can be removed on FMXv3
+//extern bool flag_do_first_agt_tx;         // old code and can be removed on FMXv3
+//extern bool flag_first_agt_tx;            // old code and can be removed on FMXv3
 
 extern GlobalMission_t global_mission;
 
@@ -120,9 +122,7 @@ extern long lastsec1;
 
 void case_write_to_tft();
 
-void case_rx_from_autopilot();
-void case_process_autopilot();
-void case_tx_to_autopilot();
+
 
 void case_tx_to_logger();
 
@@ -136,3 +136,5 @@ uint16_t int32_to_int16_c(int32_t input_int32);
 
 
 #endif
+
+// END - global.h

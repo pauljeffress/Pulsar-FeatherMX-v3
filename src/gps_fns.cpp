@@ -50,7 +50,9 @@ void print_gps_data()
     Serial.print("myFmxSettings.FMX_GPS_SIV:");
     Serial.println(myFmxSettings.FMX_GPS_SIV);
     Serial.print("myFmxSettings.FMX_GPS_POSITIONTIMESTAMP:");
-    Serial.println(myFmxSettings.FMX_GPS_POSITIONTIMESTAMP);
+    Serial.print(myFmxSettings.FMX_GPS_POSITIONTIMESTAMP);
+    Serial.print(" i.e. "); pulsar_timestamp_print(myFmxSettings.FMX_GPS_POSITIONTIMESTAMP);
+
     Serial.print("myFmxSettings.FMX_GPS_LAT:");
     Serial.println(myFmxSettings.FMX_GPS_LAT);
     Serial.print("myFmxSettings.FMX_GPS_LON:");
@@ -169,7 +171,7 @@ void case_read_gps()
                 timedOut = false;
                 start_ms = millis(); // record start time.
                 // debugPrint("case_read_GPS() - start(mS)=");debugPrintlnInt(start);
-                while (!timedOut && (fixType != GPS_MIN_FIX_TYPE)) // do this until we either get a suitable quality fix or we time out.
+                while (!timedOut && (fixType != GPS_3D_FIX_TYPE)) // do this until we either get a suitable quality fix or we time out.
                 {
                     // Flash the onboard NeoPixel at 1 Hz
                     if ((millis() / 2000) % 2 == 1)
@@ -239,13 +241,14 @@ void case_read_gps()
                 /*
                  *  If we got a suitable fix type above then quickly use the GPS to get all the time and position data from the GNSS constellation.
                  */
-                if (fixType == GPS_MIN_FIX_TYPE)
+                if (fixType == GPS_3D_FIX_TYPE)
                 {
                     debugPrintln("case_read_GPS() - A suitable quality fix was found!");
                     myFmxSettings.FMX_GPS_STATUS = FMX_GPS_STATUS_FIX_OK;
                     oled.print("FIX ok ");
                     mp3.playFile(8); // "Received a GPS fix"
                     // Flash pixel Blue (for ISBD) and Green (for success) slowly for 10 secs to indicate successful GPS Fix
+                    debugPrintln("case_read_GPS() - Flashing Pixel");
                     for (int i = 0; i < 5; i++)
                     {
                         pixelBlue();
@@ -256,16 +259,25 @@ void case_read_gps()
                     pixelOff();
                     flag_gps_fix_succeeded = true; // set flag accordingly for use in subsequent states.
 
+                    debugPrintln("case_read_GPS() - reading individual GPS parameters");
                     myFmxSettings.FMX_GPS_FIX = fixType;  // Store this data
                     myFmxSettings.FMX_GPS_SIV = sivCount; // Store this data
+                    debugPrintln("case_read_GPS() - A");
                     myFmxSettings.FMX_GPS_POSITIONTIMESTAMP = myGNSS.getUnixEpoch();
+                    debugPrintln("case_read_GPS() - B");
                     myFmxSettings.FMX_GPS_LAT = myGNSS.getLatitude();        // Get the latitude in degrees * 10^-7
+                    debugPrintln("case_read_GPS() - C");
                     myFmxSettings.FMX_GPS_LON = myGNSS.getLongitude();       // Get the longitude in degrees * 10^-7
+                    debugPrintln("case_read_GPS() - D");
                     myFmxSettings.FMX_GPS_ALT = myGNSS.getAltitudeMSL();     // Get the altitude above Mean Sea Level in mm
+                    debugPrintln("case_read_GPS() - E");
                     myFmxSettings.FMX_GPS_GSPEED = myGNSS.getGroundSpeed();  // Get the ground speed in mm/s
+                    debugPrintln("case_read_GPS() - F");
                     myFmxSettings.FMX_GPS_HEAD_MOTION = myGNSS.getHeading(); // Get the heading in degrees * 10^-7
+                    debugPrintln("case_read_GPS() - G");
                     myFmxSettings.FMX_GPS_PDOP = myGNSS.getPDOP();           // Get the PDOP in cm
-
+                    debugPrintln("case_read_GPS() - H");
+                    
                     print_gps_data();
                     seconds_since_last_gps_read = 0; // Read was successful so reset the timer.
                 }
@@ -276,6 +288,7 @@ void case_read_gps()
                     oled.println(" Fix:No/too low.");
                     mp3.playFile(7);                 // "WARNING, no GPS fix"
                     // Flash pixel Blue (for ISBD) and Red (for fail) slowly for 10 secs to indicate failure to get GPS Fix
+                    debugPrintln("case_read_GPS() - Flashing Pixel");
                     for (int i = 0; i < 5; i++)
                     {
                         pixelBlue();

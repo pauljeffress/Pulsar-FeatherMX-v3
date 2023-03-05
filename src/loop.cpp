@@ -48,8 +48,7 @@ void loop(void)
     // Read the GPS attached to the Feather.
     case READ_GPS:
         case_read_gps();
-        // main_state = TX_TO_CANBUS; // Set next state
-        main_state = CONTACT_GROUND; // XXX - TEMPORARY
+        main_state = CONTACT_GROUND;
         break;
 
     // ************************************************************************************************
@@ -60,16 +59,21 @@ void loop(void)
     break;
 
     // ************************************************************************************************
-    // Properly store MT msg here on AGT, then action anything we received from the ground that is for the FMX itself
+    // Properly store MT msg here on FMX, 
+    // then action anything we received from the ground that is for the FMX itself,
+    // then do any TX to the AP based on the MT msg we received.
     case PROCESS_ISBD_RX:
-        if (gotMsgFromGroundFlag)
-        {
-            debugPrintln("\nloop() - gotMsgFromGroundFlag = true, so lets process it.");
-            case_process_isbd_rx();
-        }
-        main_state = TX_TO_CANBUS; // XXX - TEMPORARY
+        process_isbd_rx();
+        main_state = RX_FROM_AP;
     break;
 
+    // ************************************************************************************************
+    // Read any streamed params from the Autopilot that I need.
+    // Note: this procedure also IMPORTANTLY receives & records HEARTBEATS from AP.
+    case RX_FROM_AP:
+        rx_from_autopilot();
+        main_state = TX_TO_CANBUS; // Set next state
+        break;
 
     // ************************************************************************************************
     // If we need to, send info onto the CAN bus
@@ -94,27 +98,8 @@ void loop(void)
 
 
 
-    // // ************************************************************************************************
-    // // Send Mavlink data to the autopilot.
-    // case TX_TO_AP:
-    //     case_tx_to_autopilot();
-    //     main_state = RX_FROM_AP; // Set next state
-    //     break;
 
-    // // ************************************************************************************************
-    // // Read any streamed params from the Autopilot that I need.
-    // // Note: this procedure also IMPORTANTLY receives & records HEARTBEATS from AP.
-    // case RX_FROM_AP:
-    //     case_rx_from_autopilot();
-    //     main_state = PROCESS_AP; // Set next state
-    //     break;
 
-    // // ************************************************************************************************
-    // // Review/action the recently received Mavlink data from the Autopilot.
-    // case PROCESS_AP:
-    //     case_process_autopilot();
-    //     main_state = TX_TO_AGT; // Set next state
-    //     break;
 
     // // ************************************************************************************************
     // // If we need to, send a datum to the AGT

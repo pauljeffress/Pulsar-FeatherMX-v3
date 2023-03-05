@@ -326,7 +326,7 @@ void update_waiting_msgs_iridium()
 {
     if (flag_bypass_iridium) // Bypassing Iridium
     {
-        debugPrintln("update_waiting_msgs_iridium() - WARNING: flag_bypass_iridium SET - so setting num waiting msgs to 0");
+        debugPrintln("update_waiting_msgs_iridium() - BYPASS - so setting num waiting msgs to 0 immediately");
         isbdNumWaitingMessages = 0; // Fake the remaining message count
     }
     else                           // Using Iridium

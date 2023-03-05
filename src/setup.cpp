@@ -111,5 +111,8 @@ void setup()
     pixelOff();
 
     debugPrintln("setup() - Complete");
+    debugPrintln("");
+    debugPrintln("");
+    
     logPrintln("setup() - Complete");
 } // END - setup()

@@ -13,6 +13,7 @@ void iridium_bypass_do_firstRXTX()
     // TX
     // TX over the bypass Serial link to my GSE32 box.
     // Note, outBufferNew[] was populated when prep_binary_MO_message_locarb() was called not long before now.
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - TX - START");
     for (int i = 0; i < outBufferNewSize; i++)
         Serial1.write(outBufferNew[i]);
     debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - TX - message has been sent out Serial port to GSE32");
@@ -28,6 +29,7 @@ void iridium_bypass_do_firstRXTX()
     seconds_since_last_iridium_tx = 0; // reset timer as iridium tx was "successful"
 
     // Flash pixel Magenta (for ISBD) and Green (for success) slowly for 10 secs to indicate successful ISBD send
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - TX - flashing NeoPixel");
     for (int i = 0; i < 5; i++)
     {
         pixelMagenta();
@@ -36,11 +38,13 @@ void iridium_bypass_do_firstRXTX()
         delay(1000);
     }
     pixelOff();
-
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - TX - FINISHED");
     // RX
     // Check the BYPASS serial port for a message
     // Read Serial chars from GSE32 - Check for and gather Serial data arriving from GSE32, try to build a packet.
-    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - RX - see if we have received a message from GSE32");
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - RX - START");
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - RX - WARNING - we only ever check for one RX'd message when in BYPASS!");
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - RX - Lets see if we have received a message from GSE32");
     bool timedOut = false; // track when we have timed out.
 
     uint32_t start = 0;
@@ -66,17 +70,17 @@ void iridium_bypass_do_firstRXTX()
     // Have we RX'd a valid MT message?
     if (packetTempLen)
     {
-        debugPrint("iridium_bypass_do_firstRXTX() - RX - GOT ONE, we must have a full packet as packetTempLen=");
+        debugPrint("iridium_bypass_do_firstRXTX() - BYPASS IRIDIUM - RX - GOT ONE, we must have a full packet as packetTempLen=");
         debugPrintlnInt(packetTempLen);
         inBufferNewSize = packetTempLen; // set the number of bytes stored in the buffer in its global size var.
 
         // Now, even though we know the message is valid as the recPulsarParse() code we called above,
-        // here in Iridium BYPASS code, only returns non 0 for a fully recieved and checked on the way
-        // in MT message. The problem is the corresponding real ISBD receive code does not validate the
-        // MT message it just fills a buffer with bytes, so they have to be validated later as on of our
-        // properly formatted MT messages.  So in order to test that validation code that I am marking
-        // "isbdUnvalidatedRx = true" here because I want to test that validation code EVEN when I have
-        // received and pre validated an MT message vis the BYPASS link.
+        // here in Iridium BYPASS code, only returns non 0 for a fully received and checked on the way
+        // in the MT message. The problem is the corresponding real ISBD receive code does not validate the
+        // MT message it just fills a buffer with bytes, so they have to be validated later as on to see if they are one of our
+        // properly formatted MT messages.  So in order to test that validation code, I am marking
+        // "isbdUnvalidatedRx = true" here, because I want to test that validation code EVEN when I have
+        // received and pre validated an MT message via the BYPASS link.
         isbdUnvalidatedRx = true; // We have an unvalidated MT msg in inBufferNew.
     }
     else
@@ -93,6 +97,8 @@ void iridium_bypass_do_firstRXTX()
 
         isbdUnvalidatedRx = false; // There is nothin in inBufferNew of use, to work on after here.
     }
+    debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - RX - FINISHED");
+
     isbdFirstTx = false; // clear the flag that marked this as the first time through and hence first TX.
 
     debugPrintln("iridium_bypass_do_firstRXTX() - BYPASS_IRIDIUM - Complete");

@@ -36,6 +36,8 @@ extern bool DIPsw4_last_checked_status;
 extern bool DIPsw5_last_checked_status;
 
 extern bool flag_bypass_iridium;
+extern bool flag_reset_eeprom;
+extern bool flag_contact_ground_every_5mins;
 
 /* function pre defines */
 void DIPswSetup();

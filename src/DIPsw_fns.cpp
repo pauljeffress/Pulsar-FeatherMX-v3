@@ -23,7 +23,8 @@ bool DIPsw4_last_checked_status = false;
 bool DIPsw5_last_checked_status = false; 
 
 bool flag_bypass_iridium = false;   // Controlled by DIP SW 1. If set, we will not use the 9603 Iridium modem, we wil use Serial bypass via GSE32.
-
+bool flag_reset_eeprom = false;     // Controlled by DIP SW 2. If set, on power-up/reset we will reset EEPROM values to defaults.
+bool flag_contact_ground_every_5mins = false;   // Controlled by DIP SW 3. If set, manually overides myFmxSettings.FMX_CONTACT_GND_INT_M to 5 mins
 
 // Functions
 
@@ -63,9 +64,9 @@ void DIPswCheck()
     //sw1
     flag_bypass_iridium = DIPsw1_status;    // set the flag to match switch status.
     //sw2
-
+    flag_reset_eeprom = DIPsw2_status;      // set the flag to match switch status.
     //sw3
-
+    flag_contact_ground_every_5mins = DIPsw3_status;    // set the flag to match switch status.
     //sw4
 
     //sw5
@@ -83,12 +84,16 @@ void DIPswCheck()
     {
         debugPrint("DIPswCheck() - DIPsw2 changed to ");
         if (DIPsw2_status) debugPrintln("ON"); else  debugPrintln("OFF");
+        debugPrint("DIPswCheck() - So flag_reset_eeprom = ");
+        if (DIPsw2_status) debugPrintln("TRUE now."); else  debugPrintln("FALSE now.");
     }
 
     if (DIPsw3_status != DIPsw3_last_checked_status)   // i.e. its changed since last check
     {
         debugPrint("DIPswCheck() - DIPsw3 changed to ");
         if (DIPsw3_status) debugPrintln("ON"); else  debugPrintln("OFF");
+        debugPrint("DIPswCheck() - So flag_contact_ground_every_5mins = ");
+        if (DIPsw3_status) debugPrintln("TRUE now."); else  debugPrintln("FALSE now.");
     }
 
     if (DIPsw4_status != DIPsw4_last_checked_status)   // i.e. its changed since last check

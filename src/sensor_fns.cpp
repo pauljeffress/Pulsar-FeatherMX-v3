@@ -70,10 +70,10 @@ void case_read_sensors()
 
             shtc3.getEvent(&shtc3_humidity, &shtc3_temp); // populate temp and humidity objects with fresh data
 
-            Serial.print("Temperature: ");
+            Serial.print("case_read_sensors() - Temperature: ");
             Serial.print(shtc3_temp.temperature);
             Serial.println(" degrees C");
-            Serial.print("Humidity: ");
+            Serial.print("case_read_sensors() - Humidity: ");
             Serial.print(shtc3_humidity.relative_humidity);
             Serial.println("% rH");
 
@@ -90,24 +90,24 @@ void case_read_sensors()
              * Operate the Ambient Light Sensor
              * ----------------------------------
              */
-            // debugPrintln("case_read_sensors() - AmbientLight");
+            debugPrintln("case_read_sensors() - AmbientLight");
             uint16_t veml_als = veml.readALS();
-            Serial.print("raw ALS: ");
+            Serial.print("case_read_sensors() - raw ALS: ");
             Serial.println(veml_als);
 
             uint16_t veml_white = veml.readWhite();
-            Serial.print("raw white: ");
+            Serial.print("case_read_sensors() - raw white: ");
             Serial.println(veml_white);
 
             float veml_lux = veml.readLux();
-            Serial.print("lux: ");
+            Serial.print("case_read_sensors() - lux: ");
             Serial.println(veml_lux);
             myFmxSettings.FMX_AMBIENTLIGHT = veml_lux; // value in lux
 
 
         } // END - if (sensor_ambientlight_status)
 
-        debugPrintln("case_read_sensors() - done");
+        debugPrintln("case_read_sensors() - Complete");
 
     } // END -  if (readSenorsFlag)
 }

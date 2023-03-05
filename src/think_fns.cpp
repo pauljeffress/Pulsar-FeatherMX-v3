@@ -9,16 +9,16 @@
 #include "global.h"
 #include "think_fns.h"
 
-bool justBootedFlag = false;
-bool checkPowerFlag = false;
-bool readSensorsFlag = false;
-bool readGPSFlag = false;     // when set case_read_gps() will try for a fix.
-bool contactGroundFlag = false;  // when set ....... will try to notify ground
-bool gotMsgFromGroundFlag = false; 
-bool txMsgToApFlag = false;
-bool isbdTxSucceededFlag = false;
-bool contactGroundFirstTimeFlag = false;
-bool processMsgFromGroundFlag = false;
+bool justBootedFlag = false;                // Ensures any activities that need to happen due to recent boot get triggered.
+bool contactGroundFirstTimeFlag = false;    // Ensures that not long after boot the boat does an one initial contact_ground();
+bool checkPowerFlag = false;                // When set will cause check_power() to be executed during next State Machine cycle.
+bool readSensorsFlag = false;               // When set will cause read_sensors() to be executed during next State Machine cycle.
+bool readGPSFlag = false;                   // When set will cause read_gps() to be executed during next State Machine cycle.
+bool contactGroundFlag = false;             // When set will cause contact_ground() to be executed during next State Machine cycle.
+bool gotMsgFromGroundFlag = false;          // When set will cause process_isbd_rx() to be executed during next State Machine cycle.
+bool txMsgToApFlag = false;                 // When set will cause tx_to_autopilot() to be executed during next State Machine cycle.
+bool isbdTxSucceededFlag = false;           // xxx - doesn't look like we act on this anywhere....consider removing.
+
 
 /*
  * case_think() - this is where we do our global decision making.
@@ -55,9 +55,10 @@ void case_think()
     }
 
     /*
-     *  Should we CONTACT_GROUND due periodic interval timer? 
+     *  Should we CONTACT_GROUND due periodic interval timer or manual 5min (300 SECONDS) interval?
      */
-    if ((seconds_since_last_contact_ground_attempt/60) > myFmxSettings.FMX_CONTACT_GND_INT_M)
+    if (((seconds_since_last_contact_ground_attempt/60) > myFmxSettings.FMX_CONTACT_GND_INT_M) ||
+        (flag_contact_ground_every_5mins && ((seconds_since_last_contact_ground_attempt) > 300)))
     {
         debugPrintln("case_think() - timer says Contact Ground");
         debugPrint("case_think() - seconds_since_last_contact_ground_attempt=");debugPrintlnInt(seconds_since_last_contact_ground_attempt);
@@ -109,15 +110,7 @@ void case_think()
         seconds_since_last_gps_read = 0;    // Reset this timer.
     }
 
-    /*
-     * Do we have a new MT Msg from Ground that we need to process/action?
-     */
-    if (gotMsgFromGroundFlag)
-    {
-        debugPrintln("case_think() - gotMsgFromGroundFlag = true so process message from ground.");
-        processMsgFromGroundFlag = true;    // ensure we process it on way through next pass.
-        gotMsgFromGroundFlag = false;   // reset the flag.
-    }
+
 
 
 } // END - case_think()

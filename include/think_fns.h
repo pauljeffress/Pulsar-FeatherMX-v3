@@ -29,7 +29,7 @@ extern bool gotMsgFromGroundFlag;
 extern bool txMsgToApFlag;
 extern bool isbdTxSucceededFlag;
 extern bool contactGroundFirstTimeFlag;
-extern bool processMsgFromGroundFlag;
+
 
 /* function pre defines */
 

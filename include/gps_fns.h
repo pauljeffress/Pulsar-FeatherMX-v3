@@ -22,7 +22,7 @@
 #define GPS_FIX_TIMEOUT_S 60UL      // seconds - Timeout after this many _minutes_ when waiting for a 3D GPS fix
 #define GPS_MAX_TRIES 3             // When we try to get a fix, how many times do we try before failing and moving on.
 //#define GPS_LAST_READ_PERIOD 3UL    // minutes - How recently do we consider it ok not to do another fresh read?
-#define GPS_MIN_FIX_TYPE 3          // Minimum Fix Type (2D, 3D etc) for AGT onboard GPS to consider it got a usable fix.
+#define GPS_3D_FIX_TYPE 3          // Minimum Fix Type (2D, 3D etc) for AGT onboard GPS to consider it got a usable fix.
 
 #define FMX_GPS_STATUS_UNKNOWN          1
 #define FMX_GPS_STATUS_INIT_OK          2

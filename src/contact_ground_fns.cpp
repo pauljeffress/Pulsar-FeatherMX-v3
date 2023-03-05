@@ -36,7 +36,9 @@ void case_contact_ground()
 {
     if (contactGroundFlag)
     {
-        debugPrintln("\ncontact_ground() - Starting");
+        debugPrintln("\nX X X X X X X X X X X X X X");
+        debugPrintln("contact_ground() - Starting");
+        debugPrintln("X X X X X X X X X X X X X X");
         oled.print("contact_ground()");
         if(flag_bypass_iridium) // print debugs/oled for BYPASS mode
         {
@@ -59,7 +61,9 @@ void case_contact_ground()
 
         pixelOff(); // cleanup pixel at end of state. It may have been left on by the ISBDCallback functions.
 
+        debugPrintln("X X X X X X X X X X X X X X");
         debugPrintln("contact_ground() - Complete");
+        debugPrintln("X X X X X X X X X X X X X X");
     }
 } // END - case_contact_ground()
 

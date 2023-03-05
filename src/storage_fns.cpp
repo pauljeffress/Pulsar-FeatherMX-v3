@@ -104,16 +104,17 @@ void setupFmxSettings()
         Serial.println(myStorage.length());
 
         // If the EEPROM already contains valid settings, they will always used - unless you
-        // uncomment the #define RESET_EEPROM_TO_DEFAULTS in global.h
-        // which will cause the code below to reset the EEPROM with the default settings from FmxSettings.h
-#ifdef RESET_EEPROM_TO_DEFAULTS
-        Serial.print(__FUNCTION__);
-        debugPrintln(" - WARNING - EEPROM contents are being wiped and re-initialised with defaults!");
-        Serial.print(__FUNCTION__);
-        debugPrintln("() - because #define RESET_EEPROM_TO_DEFAULTS is not commented out in global.h");
-        putFmxSettings(); // store the recently set to defaults, myFmxSettings struct to EEPROM.
-        delay(5000);
-#endif
+        // set DIPsw2, in which case the EEPROM contents will be reset to defaults on boot/reset.
+        // Note this used to be controlled by #define RESET_EEPROM_TO_DEFAULTS in global.h
+        if (flag_reset_eeprom)
+        {
+            Serial.print(__FUNCTION__);
+            debugPrintln("() - WARNING - EEPROM contents are being wiped and re-initialised with defaults!");
+            Serial.print(__FUNCTION__);
+            debugPrintln("() - because DIPsw2 is currently ON");
+            putFmxSettings(); // store the recently set to defaults, myFmxSettings struct to EEPROM.
+            delay(5000);
+        }
 
         // Check if the EEPROM data is valid
         if (checkEEPROM()) // if it is valid...

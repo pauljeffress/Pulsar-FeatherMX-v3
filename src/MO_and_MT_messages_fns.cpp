@@ -41,6 +41,7 @@ void inBuffer_to_mt_structs()
                                                                 inBufferNewLatest[pos + 2], 
                                                                 inBufferNewLatest[pos + 3]);  pos += 4;
     pulsar_mt_msg.set_fmx_contact_ground_int_m = fromBuf_uint16_t(inBufferNewLatest[pos], inBufferNewLatest[pos + 1]);  pos += 2;
+    
     pulsar_mt_msg.set_ap_arm_state_b = inBufferNewLatest[pos];      pos += 1;
     pulsar_mt_msg.set_ap_disarm_state_b = inBufferNewLatest[pos];   pos += 1;
 

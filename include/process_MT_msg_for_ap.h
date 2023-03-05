@@ -18,7 +18,8 @@
 
 
 /* extern global variables */
-extern bool flag_tx_msg_to_ap;
+
+extern bool flag_got_msg_from_ground_with_mission;
 
 /* function pre defines */
 void process_MT_msg_for_ap();

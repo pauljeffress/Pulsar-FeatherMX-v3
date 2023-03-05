@@ -107,7 +107,8 @@ void do_iridium_locarb()
             }
 
             /*
-             * This is only called to do 2nd, 3rd... RX, after the 1st TX/RX was successful.
+             * This is only called to do 2nd, 3rd... RX, after the 1st TX/RX was successful. And remember our BYPASS TX/RX
+             * function only ever looks to do one RX, whereas when using ISBD we may do many.
              */
             else // This is not the first time around the while loop, so we are RX'ing only from now on.
                  // There may be multiple Mobile Terminated messages waiting for us, all queued up, so we
@@ -120,7 +121,7 @@ void do_iridium_locarb()
                 isbdDoAdditionalRxs();
             }
 
-            if (isbdUnvalidatedRx)                    // Was a potential MT message received (from either ISBD or Serial BYPASS)?
+            if (isbdUnvalidatedRx)              // Was a potential MT message received (from either ISBD or Serial BYPASS)?
                 isbdValidRx = isbdCheckMtMsg(); // If so, check if was valid MT formatted message.
             else
                 isbdValidRx = false; // explicitly clear the flag to be tidy.
@@ -137,7 +138,7 @@ void do_iridium_locarb()
                 // (even if the ISBD system has two messages), it will read it in and hence empty the HW buffer
                 // before requesting any more MT messages.
                 // To avoid the problem when doing BYPASS path testing, I will drain any bytes remaining in the
-                // serial hw buffer now.
+                // serial hw buffer now. The below code gets run for ISBD and BYPASS, but thats ok.
                 while (Serial1.available())
                     Serial1.read();
 
@@ -166,7 +167,7 @@ void do_iridium_locarb()
 
         print_iridium_endstate();
 
-        sleep_iridium_modem();
+        //sleep_iridium_modem();    // removed as no point putting modem to sleep when we power it down just below.
 
     } // END - else (!iridiumOk)
 
